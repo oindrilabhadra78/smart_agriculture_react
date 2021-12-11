@@ -55,6 +55,20 @@ body > #root > div {
   margin-bottom: 40px;
 }
 
+.react-scrollable-list {
+  box-sizing: border-box;
+  max-height: 300px;
+  width: 400px;
+  overflow-y: scroll;
+}
+
+.react-scrollable-list-item {
+  box-sizing: border-box;
+  height: 30px;
+  padding: 5px;
+  border-bottom: #ddd solid 1px;
+}
+
 .form-control {
   border: 1px solid black;
   height: 100px;

@@ -4,6 +4,14 @@ import "./App.css";
 import { HomePage } from "./pages/HomePage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { RouteHandler } from "./components/RouteHandler";
+import { FarmerProfile } from "./components/FarmerProfile";
+import { DistributorProfile } from "./components/DistributorProfile";
+import { RetailerProfile } from "./components/RetailerProfile";
+import { ConsumerProfile } from "./components/ConsumerProfile";
+import { ColdStorageProfile } from "./components/ColdStorageProfile";
+import { OfficialProfile } from "./components/OfficialProfile";
+import { UnverifiedActors } from "./components/UnverifiedActors";
+import { GetDetails } from "./components/GetDetails";
 
 import { Switch, Router, Route } from "react-router";
 
@@ -61,35 +69,17 @@ function App() {
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route path="/Register" component={RegisterPage} />
-            <Route
-              path="/FarmerProfile"
-              component={() => <RouteHandler request="FarmerProfile" />}
-            />
-            <Route
-              path="/OfficialProfile"
-              component={() => <RouteHandler request="GovtProfile" />}
-            />
-            <Route
-              path="/DistributorProfile"
-              component={() => <RouteHandler request="DistributorProfile" />}
-            />
-            <Route
-              path="/ConsumerProfile"
-              component={() => <RouteHandler request="ConsumerProfile" />}
-            />
-            <Route
-              path="/RetailerProfile"
-              component={() => <RouteHandler request="RetailerProfile" />}
-            />
-            <Route
-              path="/ColdStorageProfile"
-              component={() => <RouteHandler request="ColdStorageProfile" />}
-            />
+            <Route path="/FarmerProfile" component={FarmerProfile} />
+            <Route path="/OfficialProfile" component={OfficialProfile} />
+            <Route path="/DistributorProfile" component={DistributorProfile} />
+            <Route path="/ConsumerProfile" component={ConsumerProfile} />
+            <Route path="/RetailerProfile" component={RetailerProfile} />
+            <Route path="/ColdStorageProfile" component={ColdStorageProfile} />
+            <Route path="/UnverifiedActors" component={UnverifiedActors} />
+            <Route path="/GetDetails/:id" render={(props) => <GetDetails {...props} />} />
             {auth ? (
-              <Route
-                path="/Login"
-                component={() => <RouteHandler request="Login" />}
-              />
+              <Route path="/Login"
+                component={() => <RouteHandler request="Login" />} />
             ) : (
               <Redirect to="/" />
             )}

@@ -39,7 +39,6 @@ contract RetailerContract {
         retailer.longitude = _longitude;
         retailer.isEligible = false;
         
-        retailerAccounts.push(tx.origin);
         unverifiedRetailerAccounts.push(tx.origin);
     }
 
@@ -70,6 +69,14 @@ contract RetailerContract {
     function getUnverifiedRetailerAccounts() public onlyGovernmentOfficial view returns (address[] memory) {
         return unverifiedRetailerAccounts;
     }
+
+    function getNumUnverifiedRetailers() public onlyGovernmentOfficial view returns (uint256) {
+        return unverifiedRetailerAccounts.length;
+    }
+
+    function getUnverifiedRetailer(uint256 pos) public onlyGovernmentOfficial view returns (address) {
+        return unverifiedRetailerAccounts[pos];
+    }
     
     function setEligible(address _address) public onlyGovernmentOfficial {
         for (uint256 i = 0 ; i < unverifiedRetailerAccounts.length ; i++) {
@@ -79,6 +86,7 @@ contract RetailerContract {
                 retailers[_address].isEligible = true;
                 rc.addRole(_address, rc.retailerRoleID());
                 unverifiedRetailerAccounts.length--;
+                retailerAccounts.push(_address);
                 break;
             }
         }

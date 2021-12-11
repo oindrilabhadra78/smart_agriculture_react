@@ -55,7 +55,6 @@ contract FarmerContract is Roles/*, usingProvable*/ {
         farmer.longitude = _longitude;
         farmer.eligible = false;
 
-        farmerAccounts.push(tx.origin);
         unverifiedFarmerAccounts.push(tx.origin);
     }
 
@@ -102,6 +101,7 @@ contract FarmerContract is Roles/*, usingProvable*/ {
                 delete unverifiedFarmerAccounts[unverifiedFarmerAccounts.length-1];
                 unverifiedFarmerAccounts.length--;
                 farmers[_address].eligible = true;
+                farmerAccounts.push(_address);
                 rc.addRole(_address, rc.farmerRoleID());
                 break;
             }
@@ -112,6 +112,14 @@ contract FarmerContract is Roles/*, usingProvable*/ {
         return unverifiedFarmerAccounts;
     }
     
+    function getNumUnverifiedFarmers() public onlyGovernmentOfficial view returns (uint256) {
+        return unverifiedFarmerAccounts.length;
+    }
+
+    function getUnverifiedFarmer(uint256 pos) public onlyGovernmentOfficial view returns (address) {
+        return unverifiedFarmerAccounts[pos];
+    }
+
     /*function __callback(bytes32 myid, string result, bytes proof) public {
         if (msg.sender != provable_cbAddress()) revert();
         recommendedCrops = result;

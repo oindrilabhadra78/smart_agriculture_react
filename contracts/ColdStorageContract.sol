@@ -47,7 +47,6 @@ contract ColdStorageContract {
         coldStorage.price = _price;
         coldStorage.isEligible = false;
         
-        coldStorageAddresses.push(tx.origin);
         unverifiedColdStorages.push(tx.origin);
     }
 
@@ -268,6 +267,14 @@ contract ColdStorageContract {
     function getUnverifiedColdStorages() public onlyGovernmentOfficial view returns (address[] memory) {
         return unverifiedColdStorages;
     }
+
+    function getNumUnverifiedColdStorages() public onlyGovernmentOfficial view returns (uint256) {
+        return unverifiedColdStorages.length;
+    }
+
+    function getUnverifiedColdStorage(uint256 pos) public onlyGovernmentOfficial view returns (address) {
+        return unverifiedColdStorages[pos];
+    }
     
     function setEligible(address _address) public onlyGovernmentOfficial {
         for (uint256 i = 0 ; i < unverifiedColdStorages.length ; i++) {
@@ -276,6 +283,7 @@ contract ColdStorageContract {
                 delete unverifiedColdStorages[unverifiedColdStorages.length-1];
                 coldStorages[_address].isEligible = true;
                 unverifiedColdStorages.length--;
+                coldStorageAddresses.push(_address);
                 rc.addRole(_address, rc.coldStorageRoleID());
                 break;
             }

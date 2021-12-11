@@ -18,7 +18,7 @@ export const Login = ({ roleID }) => {
   } else if (roleID == 5){
     return <Redirect to="/ColdStorageProfile" />;
   } else if (roleID == 6){
-    return <Redirect to="/GovtProfile" />;
+    return <Redirect to="/OfficialProfile" />;
   }
   else
     return (

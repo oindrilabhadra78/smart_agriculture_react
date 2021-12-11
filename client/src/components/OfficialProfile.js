@@ -1,47 +1,17 @@
 import NavBar from "./Navbar/NavBar";
-import ConsumerContract from "../contracts/ConsumerContract.json";
+import GovernmentContract from "../contracts/GovernmentContract.json";
 import Roles from "../contracts/Roles.json";
 import { Card, ListGroup } from "react-bootstrap";
 import { selectAccount, selectWeb3 } from "../redux/account/accountSlice";
 import { useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from "react";
 
 window.ethereum.on("accountsChanged", () => {
     window.location.reload();
 });
 
-/*class ConsumerProfile extends React.Component {
-  render() {
-    return (
-      <div>
-      <NavBar />
-      <div className="row">
-      <div className="col-7">
-      </div>
-      <div className="col-5">
-      <Card style={{ width: "18rem" }}>
-      <Card.Body>
-      <Card.Title>Profile</Card.Title>
-      <Card.Subtitle className="mb-2 text-muted">
-      Consumer
-      </Card.Subtitle>
-      <ListGroup variant="flush">
-      <ListGroup.Item>Name : {this.props.name}</ListGroup.Item>
-      <ListGroup.Item>Contact : {this.props.contact}</ListGroup.Item>
-      </ListGroup>
-      </Card.Body>
-      </Card>
-      </div>
-      </div>
-      </div>
-      );
-  }
-}
-
-export default ConsumerProfile;*/
-
-
-export const ConsumerProfile = () => {
+export const OfficialProfile = () => {
     const account = useSelector(selectAccount);
     const web3 = useSelector(selectWeb3);
 
@@ -60,11 +30,11 @@ export const ConsumerProfile = () => {
             const instance = new web3.eth.Contract(
                 Roles.abi,
                 deployedNetwork && deployedNetwork.address
-            );
+                );
 
             var _roleId = await instance.methods
-                .getRole(account)
-                .call();
+            .getRole(account)
+            .call();
 
             setRoleId(_roleId);
         } catch (error) {
@@ -73,15 +43,15 @@ export const ConsumerProfile = () => {
         }
     };
 
-    const getConsumer = async () => {
-        const deployedNetwork = ConsumerContract.networks[networkId];
+    const getGovt = async () => {
+        const deployedNetwork = GovernmentContract.networks[networkId];
 
         const instance = new web3.eth.Contract(
-            ConsumerContract.abi,
+            GovernmentContract.abi,
             deployedNetwork && deployedNetwork.address
-        );
+            );
 
-        let obj = await instance.methods.getConsumer(account).call();
+        let obj = await instance.methods.getOfficial(account).call();
 
         return obj;
     };
@@ -92,9 +62,9 @@ export const ConsumerProfile = () => {
             await getRole();
             console.log("Got role: " + roleId);
 
-            if (roleId == 4) {
+            if (roleId == 6) {
                 if (data === undefined) {
-                    var result = await getConsumer();
+                    var result = await getGovt();
                     setData(result);
                 } else {
                     setLoading(false);
@@ -110,21 +80,35 @@ export const ConsumerProfile = () => {
     if (loading) {
         return <h1>Loading</h1>;
     } else {
-        if (roleId == 4) {
+        if (roleId == 6) {
             return (
-                <div>
-      <h1>Consumer</h1>
-      <h3>Name:{data._name} </h3>           
-      <h3>Contact:{data._contact}</h3>
-      </div>
+            <div>
+            <h1>Government Official</h1>
+            <h3>Name:{data._name} </h3>           
+            <h3>Employee Id:{data._govId}</h3>
+
+            <Link to="/UnverifiedActors">
+            <button type="button">
+            Unverified Actors
+            </button>
+            </Link>
+
+            <Link to="/VerifyActors">
+            <button type="button">
+            Verify Actors
+            </button>
+            </Link>
+
+            </div>
             );
         } else {
             return (
-                <div>
-      <h2>Not authenticated</h2>
-      <a href="/">Home</a>
-      </div>
+            <div>
+            <h2>Not authenticated</h2>
+            <a href="/">Home</a>
+            </div>
             );
         }
     }
 };
+

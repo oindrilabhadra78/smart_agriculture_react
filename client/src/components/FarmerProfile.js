@@ -75,11 +75,11 @@ export const FarmerProfile = () => {
             const instance = new web3.eth.Contract(
                 Roles.abi,
                 deployedNetwork && deployedNetwork.address
-            );
+                );
 
             var _roleId = await instance.methods
-                .getRole(account)
-                .call();
+            .getRole(account)
+            .call();
 
             setRoleId(_roleId);
         } catch (error) {
@@ -94,7 +94,7 @@ export const FarmerProfile = () => {
         const instance = new web3.eth.Contract(
             FarmerContract.abi,
             deployedNetwork && deployedNetwork.address
-        );
+            );
 
         let obj = await instance.methods.getFarmer(account).call();
 
@@ -123,28 +123,30 @@ export const FarmerProfile = () => {
     console.log(loading);
 
     if (loading) {
-        return <h1>Loading</h1>;
+        return <h3>Loading</h3>;
     } else {
         if (roleId == 1) {
             return (
                 <div>
-      <h1>Farmer</h1>
-      <h3>Name:{data._name} </h3>           
-      <h3>State Of Residence:{data._stateOfResidence} </h3>
-      <h3>Land Owned={data._landOwned} </h3>
-      <h3>Gender={data._gender} </h3>
-      <h3>Latitude={data._latitude} </h3>
-      <h3>Longitude={data._longitude} </h3>
-      <h3>Verified={data._isEligible} </h3>
-      </div>
-            );
+                <div className="profile">
+                <h2>Farmer</h2>
+                <p>Name: {data._name} </p>           
+                <p className="capitalize">State Of Residence: {data._stateOfResidence} </p>
+                <p>Land Owned= {data._landOwned} acres </p>
+                <p>Gender: {data._gender} </p>
+                <p>Latitude: {data._latitude < 0 ? (Math.abs(data._latitude).toString()+String.fromCharCode(176)+"S") : (data._latitude.toString()+String.fromCharCode(176)+"N")} </p>
+                <p>Longitude: {data._longitude < 0 ? (Math.abs(data._longitude).toString()+String.fromCharCode(176)+"W") : (data._longitude.toString()+String.fromCharCode(176)+"E")} </p>
+                </div>
+
+                </div>
+                );
         } else {
             return (
                 <div>
-      <h2>Not authenticated</h2>
-      <a href="/">Home</a>
-      </div>
-            );
+                <h2>Not authenticated</h2>
+                <a href="/">Home</a>
+                </div>
+                );
         }
     }
 };

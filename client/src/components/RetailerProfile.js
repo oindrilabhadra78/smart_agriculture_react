@@ -122,22 +122,22 @@ export const RetailerProfile = () => {
         if (roleId == 3) {
             return (
                 <div>
-      <h1>Retailer</h1>
-      <h3>Name:{data._name} </h3>           
-      <h3>Contact:{data._contact} </h3>
-      <h3>Latitude={data._latitude} </h3>
-      <h3>Longitude={data._longitude} </h3>
-      <h3>Verified={data._isEligible} </h3>
-      </div>
+                <div className="profile">
+                <h2>Retailer</h2>
+                <p>Name: {data._name} </p>           
+                <p>Contact: {data._contact} </p>
+                <p>Latitude: {data._latitude < 0 ? (Math.abs(data._latitude).toString()+String.fromCharCode(176)+"S") : (data._latitude.toString()+String.fromCharCode(176)+"N")} </p>
+                <p>Longitude: {data._longitude < 0 ? (Math.abs(data._longitude).toString()+String.fromCharCode(176)+"W") : (data._longitude.toString()+String.fromCharCode(176)+"E")} </p>
+                </div>
+                </div>
             );
         } else {
             return (
                 <div>
-      <h2>Not authenticated</h2>
-      <a href="/">Home</a>
-      </div>
+                <h2>Not authenticated</h2>
+                <a href="/">Home</a>
+                </div>
             );
         }
     }
 };
-

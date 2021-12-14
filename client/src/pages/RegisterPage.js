@@ -166,18 +166,16 @@ export const RegisterPage = () => {
 		<label>Name</label>
 		<input
 		type="text"
-		placeholder="Enter your name"
 		value={name}
 		onChange={(e) => setName(e.target.value)}
 		/>
 		</div>
 
 		<div className="form-control">
-		<label>Land owned</label>
+		<label>Area of Land owned</label>
 		<input
 		type="number" 
 		min="0"
-		placeholder="Enter area in acres"
 		value={landOwned}
 		onChange={(e) => setLandOwned(e.target.value)}
 		/>
@@ -185,8 +183,7 @@ export const RegisterPage = () => {
 
 		<div className="form-control">
 		<label>State of Residence</label>
-		<select
-		style={{ fontSize: "25px" }}
+		<select className="drop-down"
 		value={stateOfResidence}
 		onChange={(e) => setStateOfResidence(e.target.value)}
 		>
@@ -228,7 +225,6 @@ export const RegisterPage = () => {
 		type="number" 
 		min="-90"
 		max="90"
-		placeholder="Enter latitude"
 		value={latitude}
 		onChange={(e) => setLatitude(e.target.value)}
 		/>
@@ -240,7 +236,6 @@ export const RegisterPage = () => {
 		type="number" 
 		min="-180"
 		max="180"
-		placeholder="Enter lontitude"
 		value={longitude}
 		onChange={(e) => setLongitude(e.target.value)}
 		/>
@@ -248,8 +243,7 @@ export const RegisterPage = () => {
 
 		<div className="form-control">
 		<label>Gender</label>
-		<select
-		style={{ fontSize: "25px"}}
+		<select className="drop-down"
 		value={gender}
 		onChange={(e) => setGender(e.target.value)}
 		>
@@ -267,17 +261,15 @@ export const RegisterPage = () => {
 		<label>Name</label>
 		<input
 		type="text"
-		placeholder="Enter your name"
 		value={name}
 		onChange={(e) => setName(e.target.value)}
 		/>
 		</div>
 
 		<div className="form-control">
-		<label>Contact</label>
+		<label>Contact details</label>
 		<input
 		type="text"
-		placeholder="Enter your contact details"
 		value={contact}
 		onChange={(e) => setContact(e.target.value)}
 		/>
@@ -289,7 +281,6 @@ export const RegisterPage = () => {
 		type="number" 
 		min="-90"
 		max="90"
-		placeholder="Enter latitude"
 		value={latitude}
 		onChange={(e) => setLatitude(e.target.value)}
 		/>
@@ -301,7 +292,6 @@ export const RegisterPage = () => {
 		type="number" 
 		min="-180"
 		max="180"
-		placeholder="Enter lontitude"
 		value={longitude}
 		onChange={(e) => setLongitude(e.target.value)}
 		/>
@@ -314,17 +304,15 @@ export const RegisterPage = () => {
 		<label>Name</label>
 		<input
 		type="text"
-		placeholder="Enter your name"
 		value={name}
 		onChange={(e) => setName(e.target.value)}
 		/>
 		</div>
 
 		<div className="form-control">
-		<label>Contact</label>
+		<label>Contact details</label>
 		<input
 		type="text"
-		placeholder="Enter your contact details"
 		value={contact}
 		onChange={(e) => setContact(e.target.value)}
 		/>
@@ -336,7 +324,6 @@ export const RegisterPage = () => {
 		<label>Name</label>
 		<input
 		type="text"
-		placeholder="Enter your name"
 		value={name}
 		onChange={(e) => setName(e.target.value)}
 		/>
@@ -346,7 +333,6 @@ export const RegisterPage = () => {
 		<label>Employee ID</label>
 		<input
 		type="text"
-		placeholder="Enter your employee ID"
 		value={empId}
 		onChange={(e) => setEmpId(e.target.value)}
 		/>
@@ -358,7 +344,6 @@ export const RegisterPage = () => {
 		<label>Name</label>
 		<input
 		type="text"
-		placeholder="Enter your name"
 		value={name}
 		onChange={(e) => setName(e.target.value)}
 		/>
@@ -370,7 +355,6 @@ export const RegisterPage = () => {
 		type="number" 
 		min="-90"
 		max="90"
-		placeholder="Enter latitude"
 		value={latitude}
 		onChange={(e) => setLatitude(e.target.value)}
 		/>
@@ -382,7 +366,6 @@ export const RegisterPage = () => {
 		type="number" 
 		min="-180"
 		max="180"
-		placeholder="Enter lontitude"
 		value={longitude}
 		onChange={(e) => setLongitude(e.target.value)}
 		/>
@@ -393,7 +376,6 @@ export const RegisterPage = () => {
 		<input
 		type="number" 
 		min="0"
-		placeholder="Enter capacity"
 		value={capacity}
 		onChange={(e) => setCapacity(e.target.value)}
 		/>
@@ -404,7 +386,6 @@ export const RegisterPage = () => {
 		<input
 		type="number" 
 		min="0"
-		placeholder="Enter pricing"
 		value={price}
 		onChange={(e) => setPrice(e.target.value)}
 		/>
@@ -421,8 +402,7 @@ export const RegisterPage = () => {
 		<form className="add-form">
 		<div className="form-control">
 		<label>Register As</label>
-		<select
-		style={{ fontSize: "25px"}}
+		<select className="drop-down"
 		value={role}
 		onChange={(e) => setRole(e.target.value)}
 		>
@@ -441,8 +421,8 @@ export const RegisterPage = () => {
 		</div>
 
 		<button
-		className="btn"
-		style={{ marginTop: "30px" }}
+		className="btn-grad"
+		style={{ marginLeft: "0px", marginTop: "30px", outline: 'none', border: 'none' }}
 		onClick={addRole}
 		>
 		Submit

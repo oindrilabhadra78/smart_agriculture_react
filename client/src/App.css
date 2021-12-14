@@ -1,126 +1,374 @@
 .App {
-  width: 100vw;
-  height: 100vh;
+    width: 100vw;
+    height: 100vh;
 }
 
-body > #root > div {
-  height: 100vh;
+body>#root>div {
+    height: 100vh;
 }
 
 .header {
-  display: flex;
-  justify-content: center;
-  background-color: burlywood;
-  color: black;
-  height: auto;
-  margin: auto;
-  font-size: 30px;
-  align-items: center;
+    background-image: linear-gradient(to right, #02AAB0 0%, #00CDAC 51%, #02AAB0 100%);
+    margin: 10px;
+    margin-left: 0px;
+    padding: 15px 45px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: block;
+    font-family: Segoe UI;
+    font-size: 18px;
 }
 
 .container {
-  max-width: 700px;
-  margin: 30px auto;
-  overflow: auto;
-  min-height: 300px;
-  border: 5px solid burlywood;
-  padding: 30px;
-  border-radius: 5px;
+    max-width: 600px;
+    margin: 30px auto;
+    overflow: auto;
+    min-height: 300px;
+    border: 2px solid #02AAB0;
+    padding: 50px;
+    border-radius: 20px;
 }
 
 .fill-window {
-  height: 100%;
-  position: absolute;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+}
+
+.profile {
+    max-width: 300px;
+    margin: 30px auto;
+    border: 2px solid #02AAB0;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.profile h2 {
+    font-family: Segoe UI;
+    color: #02AAB0;
+}
+
+.profile p {
+    font-family: Segoe UI;
+    color: gray;
+}
+
+.capitalize {
+    text-transform: capitalize;
 }
 
 .btn {
-  display: block;
-  background: brown;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  margin: auto;
-  border-radius: 20px;
-  cursor: pointer;
-  text-decoration: none;
-  font-size: 20px;
-  width: 50%;
-  font-family: inherit;
+    display: block;
+    background: brown;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: auto;
+    border-radius: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 20px;
+    width: 50%;
+}
+
+
+.btn-grad {
+    background-image: linear-gradient(to right, #02AAB0 0%, #00CDAC 51%, #02AAB0 100%)
+}
+
+.btn-grad {
+    margin: 10px;
+    padding: 15px 45px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: block;
+    font-family: Segoe UI;
+    font-size: 16px;
+}
+
+.btn-grad:hover {
+    background-position: right center;
+    /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
 }
 
 .add-form {
-  margin-bottom: 40px;
+    margin-bottom: 40px;
 }
 
 .react-scrollable-list {
-  box-sizing: border-box;
-  max-height: 300px;
-  width: 400px;
-  overflow-y: scroll;
+    box-sizing: border-box;
+    max-height: 300px;
+    width: 400px;
+    overflow-y: scroll;
 }
 
 .react-scrollable-list-item {
-  box-sizing: border-box;
-  height: 30px;
-  padding: 5px;
-  border-bottom: #ddd solid 1px;
+    box-sizing: border-box;
+    height: 30px;
+    padding: 5px;
+    border-bottom: #ddd solid 1px;
 }
 
 .form-control {
-  border: 1px solid black;
-  height: 100px;
-  overflow: auto;
-  margin: 10px auto;
+    height: auto;
+    overflow: auto;
+    margin: 5px auto;
 }
 
 .form-control label {
-  color: brown;
-  margin: auto;
-  font-size: 20px;
-  display: block;
+    color: gray;
+    margin-top: 16px;
+    margin-bottom: 5px;
+    font-size: 16px;
+    display: block;
+    text-transform: uppercase;
+    font-family: Segoe UI, sans-serif;
 }
 
 .form-control input {
-  box-sizing: border-box;
-  width: 100%;
-  height: 40px;
-  margin: auto;
-  padding: 3px 7px;
-  font-size: 18px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 40px;
+    margin: auto;
+    padding: 3px 7px;
+    font-size: 16px;
+    font-family: Segoe UI;
+    border-radius: 10px;
+    border: 1px solid gray;
+}
+
+.form-control input:focus {
+    outline: none !important;
+    border: 2px solid #02AAB0;
+}
+
+.drop-down {
+    font-size: 20px;
+    padding: 10px;
+    padding-left: 5px;
+    font-family: Segoe UI;
+    border-radius: 10px;
+    padding-right: 10px;
+}
+
+.drop-down:focus {
+    outline: none !important;
+    border: 2px solid #02AAB0;
 }
 
 .Sidebar {
-  height: 100%;
-  width: 100%;
-  max-width: 175px;
-  background-color: #f78d51;
+    height: 100%;
+    width: 100%;
+    max-width: 175px;
+    background-color: #f78d51;
 }
 
 .SidebarList {
-  height: auto;
-  padding: 0;
-  width: 100%;
+    height: auto;
+    padding: 0;
+    width: 100%;
 }
 
 .SidebarList .row {
-  width: 100%;
-  height: 200px;
-  list-style-type: none;
-  font-size: 20px;
-  margin: 0%;
-  color: white;
-  padding-left: 10px;
-  align-items: center;
+    width: 100%;
+    height: 200px;
+    list-style-type: none;
+    font-size: 20px;
+    margin: 0%;
+    color: white;
+    padding-left: 10px;
+    align-items: center;
 }
 
 .SidebarList #active {
-  background-color: red;
+    background-color: red;
 }
 
 .SidebarList .row:hover {
-  cursor: pointer;
-  background-color: red;
+    cursor: pointer;
+    background-color: red;
+}
+
+.containerOuter {
+    align-items: center;
+    font-family: "Segoe UI";
+    border-radius: 8px;
+    box-shadow: 2px 6px 20px 2px rgba(10, 10, 120, 0.15);
+    display: flex;
+    font-size: 20px;
+    max-height: 400px;
+    max-width: 200px;
+    justify-content: center;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.containerInner {
+    position: relative;
+    margin: 20px;
+    overflow: hidden;
+    width: 160px;
+}
+
+.hidden {
+    display: none;
+}
+
+.entry {
+    height: 25px;
+    position: absolute;
+    width: 160px;
+}
+
+.entry:nth-child(2) {
+    left: 8px;
+    top: 8px;
+}
+
+.entry:nth-child(4) {
+    left: 8px;
+    top: 58px;
+}
+
+.entry:nth-child(6) {
+    left: 8px;
+    top: 108px;
+}
+
+.entry:nth-child(8) {
+    left: 8px;
+    top: 158px;
+}
+
+.circle {
+    border: 2px solid #545556;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 20px;
+    position: absolute;
+    transition: border-color 300ms;
+    width: 20px;
+}
+
+.entry-label {
+    cursor: pointer;
+    margin-top: -3px;
+    padding-left: 40px;
+    user-select: none;
+    -moz-user-select: none;
+}
+
+.overlay {
+    background: #fff;
+    mask: url(#holes);
+    height: 190px;
+    pointer-events: none;
+    transition: background 300ms;
+    width: 40px;
+}
+
+.highlight {
+    background: #4D98EF;
+    border-radius: 50%;
+    height: 12px;
+    left: 14px;
+    pointer-events: none;
+    position: absolute;
+    top: 14px;
+    transition: transform 400ms cubic-bezier(0.175, 0.885, 0.32, 1.2);
+    transform: translateY(-50px);
+    width: 12px;
+}
+
+.hidden:nth-child(1):checked~.highlight {
+    transform: translateY(0);
+}
+
+.hidden:nth-child(3):checked~.highlight {
+    transform: translateY(50px);
+}
+
+.hidden:nth-child(5):checked~.highlight {
+    transform: translateY(100px);
+}
+
+.hidden:nth-child(7):checked~.highlight {
+    transform: translateY(150px);
+}
+
+.hidden:nth-child(1):checked+.entry .circle {
+    border-color: #4D98EF;
+}
+
+.hidden:nth-child(3):checked+.entry .circle {
+    border-color: #4D98EF;
+}
+
+.hidden:nth-child(5):checked+.entry .circle {
+    border-color: #4D98EF;
+}
+
+.hidden:nth-child(7):checked+.entry .circle {
+    border-color: #4D98EF;
+}
+
+.check:checked~.containerOuter .overlay {
+    background: #ecf0f4;
+}
+
+.unverified-list {
+    max-width: 600px;
+    width: 100%;
+    border-radius: 12px;
+    background-color: #fff;
+    border-radius: 0 0 12px 12px;
+    padding: 15px 15px 20px;
+    display: grid;
+    counter-reset: item;
+}
+
+.unverified-list li {
+    padding: 10px 30px 10px 10px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 5px 7px -1px rgba(51, 51, 51, 0.23);
+    cursor: pointer;
+    transition: transform .25s cubic-bezier(.7, .98, .86, .98), box-shadow .25s cubic-bezier(.7, .98, .86, .98);
+    background-color: #fff;
+    font-size: 20px;
+    letter-spacing: 0.64px;
+    margin: 8px;
+    counter-increment: item;
+}
+
+.unverified-list li:hover {
+    transform: scale(1.05);
+    box-shadow: 0 9px 47px 11px rgba(51, 51, 51, 0.18);
+}
+
+.unverified-list li:before {    
+    content: counter(item);
+    align-items: flex-start;
+    text-align: center;
+    display: inline-block;
+    border-radius: 100%;
+    color: white;
+    width: 1.2em;
+    margin-right: 10px;
+    background-image: linear-gradient(to right, #02AAB0 0%, #00CDAC 51%, #02AAB0 100%)
 }

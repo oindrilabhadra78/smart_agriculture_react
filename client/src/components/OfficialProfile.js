@@ -30,11 +30,11 @@ export const OfficialProfile = () => {
             const instance = new web3.eth.Contract(
                 Roles.abi,
                 deployedNetwork && deployedNetwork.address
-                );
+            );
 
             var _roleId = await instance.methods
-            .getRole(account)
-            .call();
+                .getRole(account)
+                .call();
 
             setRoleId(_roleId);
         } catch (error) {
@@ -49,7 +49,7 @@ export const OfficialProfile = () => {
         const instance = new web3.eth.Contract(
             GovernmentContract.abi,
             deployedNetwork && deployedNetwork.address
-            );
+        );
 
         let obj = await instance.methods.getOfficial(account).call();
 
@@ -78,37 +78,36 @@ export const OfficialProfile = () => {
     console.log(loading);
 
     if (loading) {
-        return <h1>Loading</h1>;
+        return (
+            <h3>Loading</h3>
+        );
     } else {
         if (roleId == 6) {
             return (
-            <div>
-            <h1>Government Official</h1>
-            <h3>Name:{data._name} </h3>           
-            <h3>Employee Id:{data._govId}</h3>
+                <div>
+                <div className="profile">
+                <h2>Government Official</h2>
+                <p>Name: {data._name} </p>           
+                <p>Employee Id: {data._govId}</p>
 
-            <Link to="/UnverifiedActors">
-            <button type="button">
-            Unverified Actors
-            </button>
-            </Link>
+                </div>
+                <div>
+                <Link to="/UnverifiedActors" style={{ textDecoration: 'none' }}>
+                <button className="btn-grad" style={{ border: 'none', outline: 'none', margin: "auto", marginTop: "50px" }}>
+                View Unverified Actors
+                </button>
+                </Link>
+                </div>
 
-            <Link to="/VerifyActors">
-            <button type="button">
-            Verify Actors
-            </button>
-            </Link>
-
-            </div>
+                </div>
             );
         } else {
             return (
-            <div>
-            <h2>Not authenticated</h2>
-            <a href="/">Home</a>
-            </div>
+                <div>
+                <h2>Not authenticated</h2>
+                <a href="/">Home</a>
+                </div>
             );
         }
     }
 };
-

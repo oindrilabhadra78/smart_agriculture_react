@@ -76,7 +76,7 @@ function App() {
             <Route path="/RetailerProfile" component={RetailerProfile} />
             <Route path="/ColdStorageProfile" component={ColdStorageProfile} />
             <Route path="/UnverifiedActors" component={UnverifiedActors} />
-            <Route path="/GetDetails/:id" render={(props) => <GetDetails {...props} />} />
+            <Route path="/GetDetails/:role/:id" render={(props) => <GetDetails {...props} />} />
             {auth ? (
               <Route path="/Login"
                 component={() => <RouteHandler request="Login" />} />

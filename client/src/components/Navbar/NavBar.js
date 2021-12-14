@@ -33,7 +33,7 @@ const NavBar = ({ toggle }) => {
     //   </Nav>
     // </Navbar>
     <Nav>
-      <NavLogo to="/">Farmicy</NavLogo>
+      <NavLogo to="/">Smart Farming</NavLogo>
       <NavbarContainer>
         <NavIcon onClick={toggle}>
           <MenuOutline/>
@@ -43,7 +43,7 @@ const NavBar = ({ toggle }) => {
       <NavBtn>
         <NavBtnLink to="/Login">Login</NavBtnLink>
       </NavBtn>
-      <NavBtn>
+      <NavBtn style={{marginRight: "40px"}}>
         <NavBtnLink to="/Register">Register</NavBtnLink>
       </NavBtn>
     </Nav>

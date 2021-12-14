@@ -26,6 +26,11 @@ contract DistributorContract {
         _;
     }
 
+    modifier onlyAuthorisedActors(address _address) {
+        require(distributors[_address].isEligible == true || _address == tx.origin || rc.getRole(tx.origin) == rc.governmentID(), "Unauthorised actor");
+        _;
+    }
+
     function addDistributor(
         string memory _name,
         string memory _contact,
@@ -47,7 +52,7 @@ contract DistributorContract {
     }
 
     function getDistributor(address _address)
-        public
+        public onlyAuthorisedActors(_address)
         view
         returns (
             string memory _name, 

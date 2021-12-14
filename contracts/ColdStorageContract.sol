@@ -32,6 +32,11 @@ contract ColdStorageContract {
         _;
     }
 
+    modifier onlyAuthorisedActors(address _address) {
+        require(coldStorages[_address].isEligible == true || _address == tx.origin || rc.getRole(tx.origin) == rc.governmentID(), "Unauthorised actor");
+        _;
+    }
+
     function addColdStorage(
         string memory _ownerName,
         int256 _latitude,
@@ -101,7 +106,7 @@ contract ColdStorageContract {
     }
 
     function getColdStorage(address _address)
-        public
+        public onlyAuthorisedActors(_address)
         view
         returns (
             string memory _ownerName,

@@ -2,7 +2,7 @@ import { styled } from "../../utils/theme";
 import { Link as LinkR } from "react-router-dom";
 
 export const Nav = styled("nav", {
-  background: "$primary",
+  backgroundImage: "linear-gradient(to right, #02AAB0 0%, #00CDAC 51%, #02AAB0 100%)",
   height: "80px",
   //marginTop: '-80px',
   display: "flex",
@@ -30,15 +30,16 @@ export const NavbarContainer = styled("div", {
 
 export const NavLogo = styled(LinkR, {
   cursor: "pointer",
-  color: "white",
+  color: "white",  
+  fontFamily: "Segoe UI",
   justifyContent: "flex-start",
   fontSize: "2rem",
   alignItems: "center",
-  fontWeight: "bold",
+  fontWeight: "300",
   transition: "0.2s ease",
   textDecoration: "none",
   marginRight: "auto",
-  marginLeft: "20px",
+  marginLeft: "40px",
 
   "@bp2": {
     fontSize: "2.5rem",
@@ -111,10 +112,9 @@ export const NavLinks = styled(LinkR, {
   },
 
   "&:hover": {
-    color: "white",
+    backgroundPosition: "right center",
+    color: "#fff",
     textDecoration: "none",
-    transform: "scale(1.1)",
-    transition: "0.2s ease",
   },
 });
 
@@ -132,11 +132,12 @@ export const NavBtn = styled("nav", {
 
 export const NavBtnLink = styled(LinkR, {
   borderRadius: "20px",
-  background: "$secondary",
+  background: "#81efdf",
+  color: "white",
   whiteSpace: "nowrap",
   padding: "10px 20px",
-  color: "$darkGrey",
   fontSize: "16px",
+  fontFamily: "Segoe UI",
   outline: "none",
   border: "none",
   cursor: "pointer",

@@ -113,17 +113,19 @@ export const ConsumerProfile = () => {
         if (roleId == 4) {
             return (
                 <div>
-      <h1>Consumer</h1>
-      <h3>Name:{data._name} </h3>           
-      <h3>Contact:{data._contact}</h3>
-      </div>
+                <div className="profile">
+                <h2>Consumer</h2>
+                <p>Name: {data._name} </p>           
+                <p>Contact: {data._contact}</p>
+                </div>
+                </div>
             );
         } else {
             return (
                 <div>
-      <h2>Not authenticated</h2>
-      <a href="/">Home</a>
-      </div>
+                <h2>Not authenticated</h2>
+                <a href="/">Home</a>
+                </div>
             );
         }
     }

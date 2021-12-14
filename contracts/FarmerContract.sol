@@ -21,7 +21,7 @@ contract FarmerContract is Roles/*, usingProvable*/ {
         uint256 landOwned;
         int256 latitude;
         int256 longitude;
-        bool eligible;
+        bool isEligible;
     }
 
     mapping(address => Farmer) public farmers;
@@ -53,7 +53,7 @@ contract FarmerContract is Roles/*, usingProvable*/ {
         farmer.landOwned = _landOwned;
         farmer.latitude = _latitude;
         farmer.longitude = _longitude;
-        farmer.eligible = false;
+        farmer.isEligible = false;
 
         unverifiedFarmerAccounts.push(tx.origin);
     }
@@ -63,7 +63,7 @@ contract FarmerContract is Roles/*, usingProvable*/ {
     }
 
     function getFarmer(address _address)
-        public
+        public 
         view
         returns (
             string memory _name,
@@ -72,9 +72,11 @@ contract FarmerContract is Roles/*, usingProvable*/ {
             uint256 _landOwned,
             int256 _latitude,
             int256 _longitude,
-            bool _eligible
+            bool _isEligible
         )
     {
+        require(farmers[_address].isEligible == true || _address == tx.origin || rc.getRole(tx.origin) == rc.governmentID(), "Unauthorised actor");
+
         return (
             farmers[_address].name,
             farmers[_address].stateOfResidence,
@@ -82,7 +84,7 @@ contract FarmerContract is Roles/*, usingProvable*/ {
             farmers[_address].landOwned,
             farmers[_address].latitude,
             farmers[_address].longitude,
-            farmers[_address].eligible
+            farmers[_address].isEligible
         );
     }
 
@@ -100,7 +102,7 @@ contract FarmerContract is Roles/*, usingProvable*/ {
                 unverifiedFarmerAccounts[i] = unverifiedFarmerAccounts[unverifiedFarmerAccounts.length-1];
                 delete unverifiedFarmerAccounts[unverifiedFarmerAccounts.length-1];
                 unverifiedFarmerAccounts.length--;
-                farmers[_address].eligible = true;
+                farmers[_address].isEligible = true;
                 farmerAccounts.push(_address);
                 rc.addRole(_address, rc.farmerRoleID());
                 break;

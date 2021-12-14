@@ -126,23 +126,23 @@ export const ColdStorageProfile = () => {
         if (roleId == 5) {
             return (
                 <div>
-      <h1>ColdStorage</h1>
-      <h3>Owner Name={data._ownerName} </h3> 
-      <h3>Latitude={data._latitude} </h3>
-      <h3>Longitude={data._longitude} </h3>
-      <h3>Price={data._price} </h3>
-      <h3>Capacity={data._capacity} </h3>
-      <h3>Verified={data._isEligible} </h3>
-      </div>
+                <div className="profile">
+                <h2>ColdStorage</h2>
+                <p>Owner Name: {data._ownerName} </p> 
+                <p>Latitude: {data._latitude < 0 ? (Math.abs(data._latitude).toString()+String.fromCharCode(176)+"S") : (data._latitude.toString()+String.fromCharCode(176)+"N")} </p>
+                <p>Longitude: {data._longitude < 0 ? (Math.abs(data._longitude).toString()+String.fromCharCode(176)+"W") : (data._longitude.toString()+String.fromCharCode(176)+"E")} </p>
+                <p>Price: {data._price} wei</p>
+                <p>Capacity: {data._capacity} </p>
+                </div>
+                </div>
             );
         } else {
             return (
                 <div>
-      <h2>Not authenticated</h2>
-      <a href="/">Home</a>
-      </div>
+                <h2>Not authenticated</h2>
+                <a href="/">Home</a>
+                </div>
             );
         }
     }
 };
-

@@ -4,57 +4,12 @@ import Roles from "../contracts/Roles.json";
 import { Card, ListGroup } from "react-bootstrap";
 import { selectAccount, selectWeb3 } from "../redux/account/accountSlice";
 import { useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from "react";
 
 window.ethereum.on("accountsChanged", () => {
     window.location.reload();
 });
-
-/*class FarmerProfile extends React.Component {
-  render() {
-    return (
-      <div>
-      <NavBar />
-      <div className="row">
-      <div className="col-7">
-      </div>
-      <div className="col-5">
-      <Card style={{ width: "18rem" }}>
-      <Card.Body>
-      <Card.Title>Profile</Card.Title>
-      <Card.Subtitle className="mb-2 text-muted">
-      Farmer
-      </Card.Subtitle>
-      <ListGroup variant="flush">
-      <ListGroup.Item>Name : {this.props.name}</ListGroup.Item>
-      <ListGroup.Item>Gender : {this.props.gender} </ListGroup.Item>
-      <ListGroup.Item>
-      State of residence : {this.props.stateOfResidence}
-      </ListGroup.Item>
-      <ListGroup.Item>
-      Land Owned : {this.props.landOwned} acre
-      </ListGroup.Item>
-      <ListGroup.Item>
-      Lattitude : {this.props.latitude}
-      </ListGroup.Item>
-      <ListGroup.Item>
-      Longitude : {this.props.longitude}
-      </ListGroup.Item>
-      <ListGroup.Item>
-      Verification Status : {this.props.isEligible}
-      </ListGroup.Item>
-      </ListGroup>
-      </Card.Body>
-      </Card>
-      </div>
-      </div>
-      </div>
-      );
-  }
-}
-
-export default FarmerProfile;*/
-
 
 export const FarmerProfile = () => {
     const account = useSelector(selectAccount);
@@ -136,6 +91,29 @@ export const FarmerProfile = () => {
                 <p>Gender: {data._gender} </p>
                 <p>Latitude: {data._latitude < 0 ? (Math.abs(data._latitude).toString()+String.fromCharCode(176)+"S") : (data._latitude.toString()+String.fromCharCode(176)+"N")} </p>
                 <p>Longitude: {data._longitude < 0 ? (Math.abs(data._longitude).toString()+String.fromCharCode(176)+"W") : (data._longitude.toString()+String.fromCharCode(176)+"E")} </p>
+                </div>
+
+                <div>
+                <Link to="/PlantItem" style={{ textDecoration: 'none' }}>
+                <button className="btn-grad" style={{ border: 'none', outline: 'none', margin: "auto", marginTop: "50px" }}>
+                Plant Item
+                </button>
+                </Link>
+                <Link to="/HarvestItem" style={{ textDecoration: 'none' }}>
+                <button className="btn-grad" style={{ border: 'none', outline: 'none', margin: "auto", marginTop: "50px" }}>
+                Harvest Item
+                </button>
+                </Link>
+                <Link to="/StoreItem" style={{ textDecoration: 'none' }}>
+                <button className="btn-grad" style={{ border: 'none', outline: 'none', margin: "auto", marginTop: "50px" }}>
+                Store Item
+                </button>
+                </Link>
+                <Link to="/NearestSeller" style={{ textDecoration: 'none' }}>
+                <button className="btn-grad" style={{ border: 'none', outline: 'none', margin: "auto", marginTop: "50px" }}>
+                Find Nearest Cold Storage
+                </button>
+                </Link>
                 </div>
 
                 </div>

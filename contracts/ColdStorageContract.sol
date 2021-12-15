@@ -137,6 +137,10 @@ contract ColdStorageContract {
         return coldStorageAddresses.length;
     }
 
+    function getNumColdStorage(uint256 pos) public view returns(address) {
+        return coldStorageAddresses[pos];
+    }
+
     function requestColdStorage(address _address) public {
         //owner can't buy their own storage
         require(msg.sender != _address);

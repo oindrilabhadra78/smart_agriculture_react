@@ -95,6 +95,10 @@ contract FarmerContract is Roles/*, usingProvable*/ {
     function countFarmers() public view returns (uint256) {
         return farmerAccounts.length;
     }
+
+    function getNumFarmer(uint256 pos) public view returns(address) {
+        return farmerAccounts[pos];
+    }
     
     function setEligible(address _address) public onlyGovernmentOfficial {
         for (uint256 i = 0 ; i < unverifiedFarmerAccounts.length ; i++) {

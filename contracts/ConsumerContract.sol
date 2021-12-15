@@ -37,4 +37,12 @@ contract ConsumerContract {
     {
         return (consumers[_address].name, consumers[_address].contact);
     }
+
+    function countConsumers() public view returns (uint256) {
+        return consumerAccounts.length;
+    }
+
+    function getNumConsumer(uint256 pos) public view returns(address) {
+        return consumerAccounts[pos];
+    }
 }

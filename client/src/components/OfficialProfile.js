@@ -97,6 +97,13 @@ export const OfficialProfile = () => {
                 View Unverified Actors
                 </button>
                 </Link>
+
+                <Link to="/SetPrice" style={{ textDecoration: 'none' }}>
+                <button className="btn-grad" style={{ border: 'none', outline: 'none', margin: "auto", marginTop: "50px" }}>
+                Set Price of Crops
+                </button>
+                </Link>
+
                 </div>
 
                 </div>

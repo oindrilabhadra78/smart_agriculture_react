@@ -21,7 +21,6 @@ export const RegisterPage = () => {
     const account = useSelector(selectAccount);
     const web3 = useSelector(selectWeb3);
 
-
     const [farmerInstance, setFarmerInstance] = useState();
     const [distributorInstance, setDistributorInstance] = useState();
     const [retailerInstance, setRetailerInstance] = useState();

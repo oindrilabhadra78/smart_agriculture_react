@@ -65,7 +65,11 @@ contract GovernmentContract {
         csc.setEligible(_address);
     }
     
-    /*function setPrice(address _address, uint256 price) public {
-        food.setPrice(price);
-    }*/
+    function countOfficials() public view returns (uint256) {
+        return govtAccounts.length;
+    }
+
+    function getNumOfficial(uint256 pos) public view returns(address) {
+        return govtAccounts[pos];
+    }
 }

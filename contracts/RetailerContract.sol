@@ -82,6 +82,14 @@ contract RetailerContract {
     function getUnverifiedRetailer(uint256 pos) public onlyGovernmentOfficial view returns (address) {
         return unverifiedRetailerAccounts[pos];
     }
+
+    function countRetailers() public view returns (uint256) {
+        return retailerAccounts.length;
+    }
+
+    function getNumRetailer(uint256 pos) public view returns(address) {
+        return retailerAccounts[pos];
+    }
     
     function setEligible(address _address) public onlyGovernmentOfficial {
         for (uint256 i = 0 ; i < unverifiedRetailerAccounts.length ; i++) {

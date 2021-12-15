@@ -33,7 +33,7 @@ export const Login = ({ roleID }) => {
               If you have already registered, your registration form is still
               under the verification process. Please try again after some time.
             </h4>
-            <Link to="/" className="btn">
+            <Link to="/" className="btn-grad" style={{ textDecoration: 'none', marginTop: "100px" }}>
               Home
             </Link>
           </Container>

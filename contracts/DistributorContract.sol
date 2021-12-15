@@ -86,6 +86,14 @@ contract DistributorContract {
     function getUnverifiedDistributor(uint256 pos) public onlyGovernmentOfficial view returns (address) {
         return unverifiedDistributorAccounts[pos];
     }
+
+    function countDistributors() public view returns (uint256) {
+        return distributorAccounts.length;
+    }
+
+    function getNumDistributor(uint256 pos) public view returns(address) {
+        return distributorAccounts[pos];
+    }
     
     function setEligible(address _address) public onlyGovernmentOfficial {
         for (uint256 i = 0 ; i < unverifiedDistributorAccounts.length ; i++) {

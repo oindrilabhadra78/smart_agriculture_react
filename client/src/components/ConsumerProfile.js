@@ -4,42 +4,12 @@ import Roles from "../contracts/Roles.json";
 import { Card, ListGroup } from "react-bootstrap";
 import { selectAccount, selectWeb3 } from "../redux/account/accountSlice";
 import { useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from "react";
 
 window.ethereum.on("accountsChanged", () => {
     window.location.reload();
 });
-
-/*class ConsumerProfile extends React.Component {
-  render() {
-    return (
-      <div>
-      <NavBar />
-      <div className="row">
-      <div className="col-7">
-      </div>
-      <div className="col-5">
-      <Card style={{ width: "18rem" }}>
-      <Card.Body>
-      <Card.Title>Profile</Card.Title>
-      <Card.Subtitle className="mb-2 text-muted">
-      Consumer
-      </Card.Subtitle>
-      <ListGroup variant="flush">
-      <ListGroup.Item>Name : {this.props.name}</ListGroup.Item>
-      <ListGroup.Item>Contact : {this.props.contact}</ListGroup.Item>
-      </ListGroup>
-      </Card.Body>
-      </Card>
-      </div>
-      </div>
-      </div>
-      );
-  }
-}
-
-export default ConsumerProfile;*/
-
 
 export const ConsumerProfile = () => {
     const account = useSelector(selectAccount);
@@ -117,6 +87,15 @@ export const ConsumerProfile = () => {
                 <h2>Consumer</h2>
                 <p>Name: {data._name} </p>           
                 <p>Contact: {data._contact}</p>
+                </div>
+
+                <div>
+                <Link to="/BuyItem" style={{ textDecoration: 'none' }}>
+                <button className="btn-grad" style={{ border: 'none', outline: 'none', margin: "auto", marginTop: "50px" }}>
+                Buy Item from Retailer
+                </button>
+                </Link>
+
                 </div>
                 </div>
             );

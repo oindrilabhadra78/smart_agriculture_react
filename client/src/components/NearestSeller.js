@@ -68,16 +68,16 @@ export const NearestSeller = () => {
 
             var nearestSeller;
 
-            if (heading == "") {
-                if (roleId == 1) {
+            if (heading === "") {
+                if (roleId === 1) {
                     setHeading("Nearest Cold Storage");
-                } else if (roleId == 2) {
+                } else if (roleId === 2) {
                     setHeading("Nearest Farmer");
-                } else if (roleId == 3) {
+                } else if (roleId === 3) {
                     setHeading("Nearest Distributor");
                 }
             } else {
-                if (roleId == 1 || roleId == 2 || roleId == 3) {
+                if (roleId === 1 || roleId === 2 || roleId === 3) {
                     setLoading(false);
                     nearestSeller = await getNearestSeller();
                 }
@@ -92,15 +92,15 @@ export const NearestSeller = () => {
 
     const getNearestSeller = async () => {
         var nearestSeller = "";
-        if (roleId == 1) {
+        if (roleId === 1) {
             nearestSeller = await instance.methods
                 .getNearestColdStorage()
                 .call({ from: account });
-        } else if (roleId == 2) {
+        } else if (roleId === 2) {
             nearestSeller = await instance.methods
                 .getNearestFarmer()
                 .call({ from: account });
-        } else if (roleId == 3) {
+        } else if (roleId === 3) {
             nearestSeller = await instance.methods
                 .getNearestDistributor()
                 .call({ from: account });

@@ -69,16 +69,16 @@ export const BuyItem = () => {
 
             await getRole();
             
-            if (heading == "") {
-                if (roleId == 2) {
+            if (heading === "") {
+                if (roleId === 2) {
                     setHeading("Buy Item from Farmer");
-                } else if (roleId == 3) {
+                } else if (roleId === 3) {
                     setHeading("Buy Item from Distributor");
-                } else if (roleId == 4) {
+                } else if (roleId === 4) {
                     setHeading("Buy Item from Retailer");
                 }
             } else {
-                if (roleId == 2 || roleId == 3 || roleId == 4) {
+                if (roleId === 2 || roleId === 3 || roleId === 4) {
                     setLoading(false);
                 }
             }
@@ -91,15 +91,15 @@ export const BuyItem = () => {
     const buyItem = async (event) => {
         event.preventDefault();
 
-        if (roleId == 2) {
+        if (roleId === 2) {
             await instance.methods
                 .sellToDistributor(id, weight, seller)
                 .send({ from: account, value: ethValue });
-        } else if (roleId == 3) {
+        } else if (roleId === 3) {
             await instance.methods
                 .sellToRetailer(id, weight, seller)
                 .send({ from: account, value: ethValue });
-        } else if (roleId == 4) {
+        } else if (roleId === 4) {
             await instance.methods
                 .sellToConsumer(id, weight, seller)
                 .send({ from: account, value: ethValue });

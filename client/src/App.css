@@ -186,6 +186,16 @@ body>#root>div {
     border: 2px solid #02AAB0;
 }
 
+.file-upload {
+    color: gray;
+    margin-top: 16px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    display: block;
+    text-transform: uppercase;
+    font-family: Segoe UI, sans-serif;
+}
+
 .drop-down {
     font-size: 20px;
     padding: 12px;

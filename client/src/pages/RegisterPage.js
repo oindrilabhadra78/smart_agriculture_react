@@ -8,159 +8,193 @@ import RetailerContract from "../contracts/RetailerContract.json";
 import ConsumerContract from "../contracts/ConsumerContract.json";
 import GovernmentContract from "../contracts/GovernmentContract.json";
 import ColdStorageContract from "../contracts/ColdStorageContract.json";
-
+import Geocode from "react-geocode";
 import { selectAccount, selectWeb3 } from "../redux/account/accountSlice";
 import { useSelector } from "react-redux";
+import { create } from "ipfs-http-client";
 
 window.ethereum.on("accountsChanged", () => {
-    window.location.reload();
+	window.location.reload();
 });
 
+/*
+Geocode.setApiKey("AIzaSyAvNAnb5wi2tmKUU6E0uwkjSN75yRdJhY4");
+Geocode.setRegion("in");
+Geocode.fromAddress("Delhi").then(
+	(response) => {
+		const { lat, lng } = response.results[0].geometry.location;
+		console.log(lat, lng);
+	},
+	(error) => {
+		console.error(error);
+	}
+	);
+*/
 
 export const RegisterPage = () => {
-    const account = useSelector(selectAccount);
-    const web3 = useSelector(selectWeb3);
+	const account = useSelector(selectAccount);
+	const web3 = useSelector(selectWeb3);
 
-    const [farmerInstance, setFarmerInstance] = useState();
-    const [distributorInstance, setDistributorInstance] = useState();
-    const [retailerInstance, setRetailerInstance] = useState();
-    const [consumerInstance, setConsumerInstance] = useState();
-    const [coldStorageInstance, setColdStorageInstance] = useState();
-    const [governmentInstance, setGovernmentInstance] = useState();
+	const [farmerInstance, setFarmerInstance] = useState();
+	const [distributorInstance, setDistributorInstance] = useState();
+	const [retailerInstance, setRetailerInstance] = useState();
+	const [consumerInstance, setConsumerInstance] = useState();
+	const [coldStorageInstance, setColdStorageInstance] = useState();
+	const [governmentInstance, setGovernmentInstance] = useState();
 
-    const [role, setRole] = useState("");
-    const [name, setName] = useState("");
-    const [stateOfResidence, setStateOfResidence] = useState("");
-    const [landOwned, setLandOwned] = useState(0);
-    const [latitude, setLatitude] = useState(0);
-    const [longitude, setLongitude] = useState(0);
-    const [gender, setGender] = useState("");
-    const [contact, setContact] = useState("");
-    const [empId, setEmpId] = useState("");
-    const [capacity, setCapacity] = useState(0);
-    const [price, setPrice] = useState(0);
+	const [role, setRole] = useState("");
+	const [name, setName] = useState("");
+	const [stateOfResidence, setStateOfResidence] = useState("");
+	const [landOwned, setLandOwned] = useState(0);
+	const [latitude, setLatitude] = useState(0);
+	const [longitude, setLongitude] = useState(0);
+	const [gender, setGender] = useState("");
+	const [contact, setContact] = useState("");
+	const [empId, setEmpId] = useState("");
+	const [capacity, setCapacity] = useState(0);
+	const [price, setPrice] = useState(0);
+	const [fileState, setFileState] = useState(null);
 
-    useEffect(() => {
-        const initialize = async () => {
-            try {
-                const networkId = await web3.eth.net.getId();
+	const ipfs = create({ host: 'ipfs.infura.io', port: '5001', protocol: 'https', apiPath: '/api/v0' });
 
-                const deployedNetwork1 = FarmerContract.networks[networkId];
-                const instance1 = new web3.eth.Contract(
-                    FarmerContract.abi,
-                    deployedNetwork1 && deployedNetwork1.address
-                );
-                setFarmerInstance(instance1);
+	useEffect(() => {
+		const initialize = async () => {
+			try {
+				const networkId = await web3.eth.net.getId();
 
-                const deployedNetwork2 = DistributorContract.networks[networkId];
-                const instance2 = new web3.eth.Contract(
-                    DistributorContract.abi,
-                    deployedNetwork2 && deployedNetwork2.address
-                );
-                setDistributorInstance(instance2);
+				const deployedNetwork1 = FarmerContract.networks[networkId];
+				const instance1 = new web3.eth.Contract(
+					FarmerContract.abi,
+					deployedNetwork1 && deployedNetwork1.address
+					);
+				setFarmerInstance(instance1);
 
-                const deployedNetwork3 = RetailerContract.networks[networkId];
-                const instance3 = new web3.eth.Contract(
-                    RetailerContract.abi,
-                    deployedNetwork3 && deployedNetwork3.address
-                );
-                setRetailerInstance(instance3);
+				const deployedNetwork2 = DistributorContract.networks[networkId];
+				const instance2 = new web3.eth.Contract(
+					DistributorContract.abi,
+					deployedNetwork2 && deployedNetwork2.address
+					);
+				setDistributorInstance(instance2);
 
-                const deployedNetwork4 = ConsumerContract.networks[networkId];
-                const instance4 = new web3.eth.Contract(
-                    ConsumerContract.abi,
-                    deployedNetwork4 && deployedNetwork4.address
-                );
-                setConsumerInstance(instance4);
+				const deployedNetwork3 = RetailerContract.networks[networkId];
+				const instance3 = new web3.eth.Contract(
+					RetailerContract.abi,
+					deployedNetwork3 && deployedNetwork3.address
+					);
+				setRetailerInstance(instance3);
 
-                const deployedNetwork5 = ColdStorageContract.networks[networkId];
-                const instance5 = new web3.eth.Contract(
-                    ColdStorageContract.abi,
-                    deployedNetwork5 && deployedNetwork5.address
-                );
-                setColdStorageInstance(instance5);
+				const deployedNetwork4 = ConsumerContract.networks[networkId];
+				const instance4 = new web3.eth.Contract(
+					ConsumerContract.abi,
+					deployedNetwork4 && deployedNetwork4.address
+					);
+				setConsumerInstance(instance4);
 
-                const deployedNetwork6 = GovernmentContract.networks[networkId];
-                const instance6 = new web3.eth.Contract(
-                    GovernmentContract.abi,
-                    deployedNetwork6 && deployedNetwork6.address
-                );
-                setGovernmentInstance(instance6);
+				const deployedNetwork5 = ColdStorageContract.networks[networkId];
+				const instance5 = new web3.eth.Contract(
+					ColdStorageContract.abi,
+					deployedNetwork5 && deployedNetwork5.address
+					);
+				setColdStorageInstance(instance5);
 
-            } catch (error) {
+				const deployedNetwork6 = GovernmentContract.networks[networkId];
+				const instance6 = new web3.eth.Contract(
+					GovernmentContract.abi,
+					deployedNetwork6 && deployedNetwork6.address
+					);
+				setGovernmentInstance(instance6);
+
+			} catch (error) {
                 // Catch any errors for any of the above operations.
-                alert(
-                    `Failed to load web3, accounts, or contract. Check console for details.`
-                );
-                console.error(error);
-            }
-        };
+				alert(
+					`Failed to load web3, accounts, or contract. Check console for details.`
+					);
+				console.error(error);
+			}
+		};
 
-        initialize();
-    }, []);
+		initialize();
+	}, []);
 
-    const addRole = async (event) => {
-        event.preventDefault();
+	const addRole = async (event) => {
+		event.preventDefault();
+		var fileUpload;
 
-        console.log(role);
+		if (role === "farmer") {
+			fileUpload = await ipfs.add(fileState);
+			console.log(fileUpload.path);
+			await farmerInstance.methods
+			.addFarmer(name, stateOfResidence, gender, landOwned, latitude, longitude)
+			.send({
+				from: account,
+				gas: 4712388,
+				gasPrice: 1
+			});
+		} else if (role === "distributor") {
+			fileUpload = await ipfs.add(fileState);
+			console.log(fileUpload);
+			await distributorInstance.methods
+			.addDistributor(name, contact, latitude, longitude)
+			.send({
+				from: account,
+				gas: 4712388,
+				gasPrice: 1
+			});
+		} else if (role === "retailer") {
+			fileUpload = await ipfs.add(fileState);
+			console.log(fileUpload);
+			await retailerInstance.methods
+			.addRetailer(name, contact, latitude, longitude)
+			.send({
+				from: account,
+				gas: 4712388,
+				gasPrice: 1
+			});
+		} else if (role === "consumer") {
+			await consumerInstance.methods
+			.addConsumer(name, contact)
+			.send({
+				from: account,
+				gas: 4712388,
+				gasPrice: 1
+			});
+		} else if (role === "govt") {
+			await governmentInstance.methods
+			.addGovtOfficial(name, empId)
+			.send({
+				from: account,
+				gas: 4712388,
+				gasPrice: 1
+			});
+		} else if (role === "coldStorage") {
+			fileUpload = await ipfs.add(fileState);
+			console.log(fileUpload);
+			await coldStorageInstance.methods
+			.addColdStorage(name, latitude, longitude, capacity, price)
+			.send({
+				from: account,
+				gas: 4712388,
+				gasPrice: 1
+			});
+		}
+		window.location.reload();
+	};
 
-        if (role == "farmer") {
-            await farmerInstance.methods
-                .addFarmer(name, stateOfResidence, gender, landOwned, latitude, longitude)
-                .send({
-                    from: account,
-                    gas: 4712388,
-                    gasPrice: 1
-                });
-        } else if (role == "distributor") {
-            await distributorInstance.methods
-                .addDistributor(name, contact, latitude, longitude)
-                .send({
-                    from: account,
-                    gas: 4712388,
-                    gasPrice: 1
-                });
-        } else if (role == "retailer") {
-            await retailerInstance.methods
-                .addRetailer(name, contact, latitude, longitude)
-                .send({
-                    from: account,
-                    gas: 4712388,
-                    gasPrice: 1
-                });
-        } else if (role == "consumer") {
-            await consumerInstance.methods
-                .addConsumer(name, contact)
-                .send({
-                    from: account,
-                    gas: 4712388,
-                    gasPrice: 1
-                });
-        } else if (role == "govt") {
-            await governmentInstance.methods
-                .addGovtOfficial(name, empId)
-                .send({
-                    from: account,
-                    gas: 4712388,
-                    gasPrice: 1
-                });
-        } else if (role == "coldStorage") {
-            await coldStorageInstance.methods
-                .addColdStorage(name, latitude, longitude, capacity, price)
-                .send({
-                    from: account,
-                    gas: 4712388,
-                    gasPrice: 1
-                });
-        }
-        window.location.reload();
-    };
+	const captureFile = async (event) => {
+		event.preventDefault();
+		const file = event.target.files[0];
+		const reader = new window.FileReader();
+		reader.readAsArrayBuffer(file);
+		reader.onloadend = () => {
+			setFileState(Buffer(reader.result));
+		}
+	};
 
-    var options;
-    if (role == "") {
-        options = null;
-    } else if (role == "farmer") {
-        options = <div>
+	var options;
+	if (role === "") {
+		options = null;
+	} else if (role === "farmer") {
+		options = <div>
 		<div className="form-control">
 		<label>Name</label>
 		<input
@@ -252,10 +286,16 @@ export const RegisterPage = () => {
 		<option value="other">Other</option>
 		</select>
 		</div>
+
+		<div>
+		<label className="file-upload">Identity Card</label>
+		<input type="file" onChange={captureFile} />
+		</div>
+		
 		</div>;
 
-    } else if (role == "distributor" || role == "retailer") {
-        options = <div>
+	} else if (role === "distributor" || role === "retailer") {
+		options = <div>
 		<div className="form-control">
 		<label>Name</label>
 		<input
@@ -296,9 +336,14 @@ export const RegisterPage = () => {
 		/>
 		</div>
 
+		<div>
+		<label className="file-upload">Identity Card</label>
+		<input type="file" onChange={captureFile} />
+		</div>
+
 		</div>;
-    } else if (role == "consumer") {
-        options = <div>
+	} else if (role === "consumer") {
+		options = <div>
 		<div className="form-control">
 		<label>Name</label>
 		<input
@@ -317,8 +362,8 @@ export const RegisterPage = () => {
 		/>
 		</div>
 		</div>;
-    } else if (role == "govt") {
-        options = <div>
+	} else if (role === "govt") {
+		options = <div>
 		<div className="form-control">
 		<label>Name</label>
 		<input
@@ -337,8 +382,8 @@ export const RegisterPage = () => {
 		/>
 		</div>
 		</div>;
-    } else if (role == "coldStorage") {
-        options = <div>
+	} else if (role === "coldStorage") {
+		options = <div>
 		<div className="form-control">
 		<label>Name</label>
 		<input
@@ -390,11 +435,16 @@ export const RegisterPage = () => {
 		/>
 		</div>
 
-		</div>;
-    }
+		<div>
+		<label className="file-upload">Identity Card</label>
+		<input type="file" onChange={captureFile} />
+		</div>
 
-    return (
-        <div>
+		</div>;
+	}
+
+	return (
+		<div>
 		<h4 style={{ textAlign: "center" }}>Account address: {account}</h4>
 		<div className="container">
 		<div className="header">Registration</div>
@@ -429,5 +479,5 @@ export const RegisterPage = () => {
 		</form>
 		</div>
 		</div>
-    );
+		);
 };

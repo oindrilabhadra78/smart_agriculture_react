@@ -21,6 +21,7 @@ contract FarmerContract is Roles/*, usingProvable*/ {
         uint256 landOwned;
         int256 latitude;
         int256 longitude;
+        string hash;
         bool isEligible;
     }
 
@@ -44,7 +45,8 @@ contract FarmerContract is Roles/*, usingProvable*/ {
         string memory _gender,
         uint256 _landOwned,
         int256 _latitude,
-        int256 _longitude
+        int256 _longitude,
+        string _hash
     ) public {
         Farmer storage farmer = farmers[tx.origin];
         farmer.name = _name;
@@ -53,6 +55,7 @@ contract FarmerContract is Roles/*, usingProvable*/ {
         farmer.landOwned = _landOwned;
         farmer.latitude = _latitude;
         farmer.longitude = _longitude;
+        farmer.hash = _hash;
         farmer.isEligible = false;
 
         unverifiedFarmerAccounts.push(tx.origin);
@@ -98,6 +101,10 @@ contract FarmerContract is Roles/*, usingProvable*/ {
 
     function getNumFarmer(uint256 pos) public view returns(address) {
         return farmerAccounts[pos];
+    }
+
+    function getHash(address _address) public view onlyGovernmentOfficial returns(string) {
+        return farmers[_address].hash;
     }
     
     function setEligible(address _address) public onlyGovernmentOfficial {

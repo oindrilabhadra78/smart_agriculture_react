@@ -63,7 +63,7 @@ export const OfficialProfile = () => {
             console.log("Got role: " + roleId);
 
             if (roleId == 6) {
-                if (data === undefined) {
+                if (data == undefined) {
                     var result = await getGovt();
                     setData(result);
                 } else {

@@ -14,6 +14,7 @@ contract RetailerContract {
         string contact;
         int256 latitude;
         int256 longitude;
+        string hash;
         bool isEligible;
     }
 
@@ -35,13 +36,15 @@ contract RetailerContract {
         string memory _name,
         string memory _contact,
         int256 _latitude,
-        int256 _longitude
+        int256 _longitude,
+        string _hash
     ) public {
         Retailer storage retailer = retailers[tx.origin];
         retailer.name = _name;
         retailer.contact = _contact;
         retailer.latitude = _latitude;
         retailer.longitude = _longitude;
+        retailer.hash = _hash;
         retailer.isEligible = false;
         
         unverifiedRetailerAccounts.push(tx.origin);
@@ -89,6 +92,10 @@ contract RetailerContract {
 
     function getNumRetailer(uint256 pos) public view returns(address) {
         return retailerAccounts[pos];
+    }
+
+    function getHash(address _address) public view onlyGovernmentOfficial returns(string) {
+        return retailers[_address].hash;
     }
     
     function setEligible(address _address) public onlyGovernmentOfficial {

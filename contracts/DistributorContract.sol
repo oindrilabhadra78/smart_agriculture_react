@@ -14,6 +14,7 @@ contract DistributorContract {
         string contact;
         int256 latitude;
         int256 longitude;
+        string hash;
         bool isEligible;
     }
 
@@ -35,13 +36,15 @@ contract DistributorContract {
         string memory _name,
         string memory _contact,
         int256 _latitude,
-        int256 _longitude
+        int256 _longitude,
+        string _hash
     ) public {
         Distributor storage distributor = distributors[tx.origin];
         distributor.name = _name;
         distributor.contact = _contact;
         distributor.latitude = _latitude;
         distributor.longitude = _longitude;
+        distributor.hash = _hash;
         distributor.isEligible = false;
         
         unverifiedDistributorAccounts.push(tx.origin);
@@ -69,6 +72,10 @@ contract DistributorContract {
             distributors[_address].longitude,
             distributors[_address].isEligible
         );
+    }
+
+    function getHash(address _address) public view onlyGovernmentOfficial returns(string) {
+        return distributors[_address].hash;
     }
 
     function getLocation(address _address) external view returns(int256, int256) {

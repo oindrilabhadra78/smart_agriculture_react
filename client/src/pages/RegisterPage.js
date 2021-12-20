@@ -124,7 +124,7 @@ export const RegisterPage = () => {
 			fileUpload = await ipfs.add(fileState);
 			console.log(fileUpload.path);
 			await farmerInstance.methods
-			.addFarmer(name, stateOfResidence, gender, landOwned, latitude, longitude)
+			.addFarmer(name, stateOfResidence, gender, landOwned, latitude, longitude, fileUpload.path)
 			.send({
 				from: account,
 				gas: 4712388,
@@ -134,7 +134,7 @@ export const RegisterPage = () => {
 			fileUpload = await ipfs.add(fileState);
 			console.log(fileUpload);
 			await distributorInstance.methods
-			.addDistributor(name, contact, latitude, longitude)
+			.addDistributor(name, contact, latitude, longitude, fileUpload.path)
 			.send({
 				from: account,
 				gas: 4712388,
@@ -144,7 +144,7 @@ export const RegisterPage = () => {
 			fileUpload = await ipfs.add(fileState);
 			console.log(fileUpload);
 			await retailerInstance.methods
-			.addRetailer(name, contact, latitude, longitude)
+			.addRetailer(name, contact, latitude, longitude, fileUpload.path)
 			.send({
 				from: account,
 				gas: 4712388,
@@ -170,7 +170,7 @@ export const RegisterPage = () => {
 			fileUpload = await ipfs.add(fileState);
 			console.log(fileUpload);
 			await coldStorageInstance.methods
-			.addColdStorage(name, latitude, longitude, capacity, price)
+			.addColdStorage(name, latitude, longitude, capacity, price, fileUpload.path)
 			.send({
 				from: account,
 				gas: 4712388,

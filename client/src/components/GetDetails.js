@@ -34,6 +34,7 @@ export const GetDetails = (props) => {
     const web3 = useSelector(selectWeb3);
 
     const [data, setData] = useState();
+    const [hash, setHash] = useState("");
     const [loading, setLoading] = useState(true);
 
     var verified;
@@ -48,8 +49,8 @@ export const GetDetails = (props) => {
         );
 
         let obj = await instance.methods.getFarmer(props.match.params.id).call({ from: account });
-
-        return obj;
+        let hash = await instance.methods.getHash(props.match.params.id).call({ from: account });
+        return {roleObject: obj, fileHash: hash};
     };
 
     const getDistributorDetails = async () => {
@@ -62,8 +63,8 @@ export const GetDetails = (props) => {
         );
 
         let obj = await instance.methods.getDistributor(props.match.params.id).call({ from: account });
-
-        return obj;
+let hash = await instance.methods.getHash(props.match.params.id).call({ from: account });
+        return {roleObject: obj, fileHash: hash};
     };
 
     const getRetailerDetails = async () => {
@@ -76,8 +77,8 @@ export const GetDetails = (props) => {
         );
 
         let obj = await instance.methods.getRetailer(props.match.params.id).call({ from: account });
-
-        return obj;
+        let hash = await instance.methods.getHash(props.match.params.id).call({ from: account });
+        return {roleObject: obj, fileHash: hash};
     };
 
     const getColdStorageDetails = async () => {
@@ -90,8 +91,8 @@ export const GetDetails = (props) => {
         );
 
         let obj = await instance.methods.getColdStorage(props.match.params.id).call({ from: account });
-
-        return obj;
+        let hash = await instance.methods.getHash(props.match.params.id).call({ from: account });
+        return {roleObject: obj, fileHash: hash};
     };
 
 
@@ -102,16 +103,20 @@ export const GetDetails = (props) => {
             if (data === undefined) {
                 if (props.match.params.role == "farmer") {
                     result = await getFarmerDetails();
-                    setData(result);
+                    setData(result.roleObject);
+                    setHash(result.fileHash);
                 } else if (props.match.params.role == "distributor") {
                     result = await getDistributorDetails();
-                    setData(result);
+                    setData(result.roleObject);
+                    setHash(result.fileHash);
                 } else if (props.match.params.role == "retailer") {
                     result = await getRetailerDetails();
-                    setData(result);
+                    setData(result.roleObject);
+                    setHash(result.fileHash);
                 } else if (props.match.params.role == "coldStorage") {
                     result = await getColdStorageDetails();
-                    setData(result);
+                    setData(result.roleObject);
+                    setHash(result.fileHash);
                 }
 
             } else {
@@ -145,6 +150,9 @@ export const GetDetails = (props) => {
         window.location.reload(false);
     }
 
+    const viewIdCard = async () => {
+        window.open("https://ipfs.infura.io/ipfs/"+hash, '_blank');
+    }
 
     if (loading) {
         return <h3>Loading</h3>;
@@ -160,6 +168,7 @@ export const GetDetails = (props) => {
       <p>Latitude: {data._latitude} </p>
       <p>Longitude: {data._longitude} </p>
       <p>Verified: {verified} </p>
+      <button type="button" onClick={viewIdCard}>View ID Card</button>
       </div>
       <div>      	
       	<button type="button" className = "btn-grad" style={{ border: 'none', outline: 'none', margin: "auto" }} onClick={async () => {await verifyUser();}}>
@@ -177,6 +186,7 @@ export const GetDetails = (props) => {
       <p>Latitude: {data._latitude} </p>
       <p>Longitude: {data._longitude} </p>
       <p>Verified: {verified} </p>
+      <button type="button" onClick={viewIdCard}>View ID Card</button>
       </div>
 
       <div>      	
@@ -196,6 +206,7 @@ export const GetDetails = (props) => {
       <p>Latitude: {data._latitude} </p>
       <p>Longitude: {data._longitude} </p>
       <p>Verified: {verified} </p>
+      <button type="button" onClick={viewIdCard}>View ID Card</button>
       </div>
 
       <div>      	
@@ -216,6 +227,7 @@ export const GetDetails = (props) => {
       <p>Price: {data._price} </p>
       <p>Capacity: {data._capacity} </p>
       <p>Verified: {verified} </p>
+      <button type="button" onClick={viewIdCard}>View ID Card</button>
       </div>
 
       <div>      	

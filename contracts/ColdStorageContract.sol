@@ -17,6 +17,7 @@ contract ColdStorageContract {
         int256 longitude;
         uint256 capacity;
         uint256 price;
+        string hash;
         bool isEligible;
         address[] requests;
         address[] approvedRequests;
@@ -42,7 +43,8 @@ contract ColdStorageContract {
         int256 _latitude,
         int256 _longitude,
         uint256 _capacity,
-        uint256 _price
+        uint256 _price,
+        string _hash
     ) public {
         ColdStorage storage coldStorage = coldStorages[tx.origin];
         coldStorage.ownerName = _ownerName;
@@ -50,6 +52,7 @@ contract ColdStorageContract {
         coldStorage.longitude = _longitude;
         coldStorage.capacity = _capacity;
         coldStorage.price = _price;
+        coldStorage.hash = _hash;
         coldStorage.isEligible = false;
         
         unverifiedColdStorages.push(tx.origin);
@@ -123,6 +126,10 @@ contract ColdStorageContract {
             coldStorages[_address].capacity,
             coldStorages[_address].price
         );
+    }
+
+    function getHash(address _address) public view onlyGovernmentOfficial returns(string) {
+        return coldStorages[_address].hash;
     }
     
     function getLocation(address _address) external view returns(int256, int256) {

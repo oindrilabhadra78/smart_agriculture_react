@@ -18,7 +18,7 @@ window.ethereum.on("accountsChanged", () => {
 });
 
 /*
-Geocode.setApiKey("AIzaSyAvNAnb5wi2tmKUU6E0uwkjSN75yRdJhY4");
+Geocode.setApiKey("***");
 Geocode.setRegion("in");
 Geocode.fromAddress("Delhi").then(
 	(response) => {

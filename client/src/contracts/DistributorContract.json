@@ -9769,12 +9769,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xfdE8782C5fb59BABE95af22E20C610A1Df798fbF",
-      "transactionHash": "0x20770777c442f6655a971e13cdf746b8d87787da89ba4d2551519c3144d9c244"
+      "address": "0xca4e568aC93A78D213232778effd7Fca51Eb52eE",
+      "transactionHash": "0xc35fdb91d046e42226d440b3f343b37ecd11d2de4046dac2fd17edd2c97589af"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-12-23T06:19:56.202Z",
+  "updatedAt": "2022-01-03T16:29:10.379Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

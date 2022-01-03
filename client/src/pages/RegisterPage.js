@@ -18,7 +18,7 @@ window.ethereum.on("accountsChanged", () => {
 });
 
 /*
-Geocode.setApiKey("***");
+Geocode.setApiKey("");
 Geocode.setRegion("in");
 Geocode.fromAddress("Delhi").then(
 	(response) => {
@@ -46,8 +46,7 @@ export const RegisterPage = () => {
 	const [name, setName] = useState("");
 	const [stateOfResidence, setStateOfResidence] = useState("");
 	const [landOwned, setLandOwned] = useState(0);
-	const [latitude, setLatitude] = useState(0);
-	const [longitude, setLongitude] = useState(0);
+	const [location, setLocation] = useState("");
 	const [gender, setGender] = useState("");
 	const [contact, setContact] = useState("");
 	const [empId, setEmpId] = useState("");
@@ -56,6 +55,10 @@ export const RegisterPage = () => {
 	const [fileState, setFileState] = useState(null);
 
 	const ipfs = create({ host: 'ipfs.infura.io', port: '5001', protocol: 'https', apiPath: '/api/v0' });
+
+	// set the Geocoding API key
+	Geocode.setApiKey("");
+	Geocode.setRegion("in");
 
 	useEffect(() => {
 		const initialize = async () => {
@@ -122,34 +125,62 @@ export const RegisterPage = () => {
 
 		if (role === "farmer") {
 			fileUpload = await ipfs.add(fileState);
-			console.log(fileUpload.path);
-			await farmerInstance.methods
-			.addFarmer(name, stateOfResidence, gender, landOwned, latitude, longitude, fileUpload.path)
-			.send({
-				from: account,
-				gas: 4712388,
-				gasPrice: 1
-			});
+			
+			await Geocode.fromAddress(location).then(
+				async (response) => {
+					const {lat, lng} = response.results[0].geometry.location;
+					console.log(lat,lng);
+					await farmerInstance.methods
+					.addFarmer(name, stateOfResidence, gender, landOwned, Math.round(lat), Math.round(lng), fileUpload.path)
+					.send({
+						from: account,
+						gas: 4712388,
+						gasPrice: 1
+					});
+				},
+				(error) => {
+					console.error(error);
+				}
+				);
+			
 		} else if (role === "distributor") {
 			fileUpload = await ipfs.add(fileState);
-			console.log(fileUpload);
-			await distributorInstance.methods
-			.addDistributor(name, contact, latitude, longitude, fileUpload.path)
-			.send({
-				from: account,
-				gas: 4712388,
-				gasPrice: 1
-			});
+			
+			await Geocode.fromAddress(location).then(
+				async (response) => {
+					const {lat, lng} = response.results[0].geometry.location;
+					await distributorInstance.methods
+					.addDistributor(name, contact, Math.round(lat), Math.round(lng), fileUpload.path)
+					.send({
+						from: account,
+						gas: 4712388,
+						gasPrice: 1
+					});
+				},
+				(error) => {
+					console.error(error);
+				}
+				);
+			
 		} else if (role === "retailer") {
 			fileUpload = await ipfs.add(fileState);
-			console.log(fileUpload);
-			await retailerInstance.methods
-			.addRetailer(name, contact, latitude, longitude, fileUpload.path)
-			.send({
-				from: account,
-				gas: 4712388,
-				gasPrice: 1
-			});
+			
+			await Geocode.fromAddress(location).then(
+				async (response) => {
+					const {lat, lng} = response.results[0].geometry.location;
+					await retailerInstance.methods
+					.addRetailer(name, contact, Math.round(lat), Math.round(lng), fileUpload.path)
+					.send({
+						from: account,
+						gas: 4712388,
+						gasPrice: 1
+					});
+				},
+				(error) => {
+					console.error(error);
+				}
+				);
+			
 		} else if (role === "consumer") {
 			await consumerInstance.methods
 			.addConsumer(name, contact)
@@ -168,14 +199,24 @@ export const RegisterPage = () => {
 			});
 		} else if (role === "coldStorage") {
 			fileUpload = await ipfs.add(fileState);
-			console.log(fileUpload);
-			await coldStorageInstance.methods
-			.addColdStorage(name, latitude, longitude, capacity, price, fileUpload.path)
-			.send({
-				from: account,
-				gas: 4712388,
-				gasPrice: 1
-			});
+			
+			await Geocode.fromAddress(location).then(
+				async (response) => {
+					const {lat,lng} = response.results[0].geometry.location;
+					await coldStorageInstance.methods
+					.addColdStorage(name, Math.round(lat), Math.round(lng), capacity, price, fileUpload.path)
+					.send({
+						from: account,
+						gas: 4712388,
+						gasPrice: 1
+					});
+				},
+				(error) => {
+					console.error(error);
+				}
+				);		
+			
+			
 		}
 		window.location.reload();
 	};
@@ -253,24 +294,11 @@ export const RegisterPage = () => {
 		</div>
 
 		<div className="form-control">
-		<label>Latitude</label>
+		<label>Address</label>
 		<input
-		type="number" 
-		min="-90"
-		max="90"
-		value={latitude}
-		onChange={(e) => setLatitude(e.target.value)}
-		/>
-		</div>
-
-		<div className="form-control">
-		<label>Longitude</label>
-		<input
-		type="number" 
-		min="-180"
-		max="180"
-		value={longitude}
-		onChange={(e) => setLongitude(e.target.value)}
+		type="text"
+		value={location}
+		onChange={(e) => setLocation(e.target.value)}
 		/>
 		</div>
 
@@ -315,24 +343,11 @@ export const RegisterPage = () => {
 		</div>
 
 		<div className="form-control">
-		<label>Latitude</label>
+		<label>Address</label>
 		<input
-		type="number" 
-		min="-90"
-		max="90"
-		value={latitude}
-		onChange={(e) => setLatitude(e.target.value)}
-		/>
-		</div>
-
-		<div className="form-control">
-		<label>Longitude</label>
-		<input
-		type="number" 
-		min="-180"
-		max="180"
-		value={longitude}
-		onChange={(e) => setLongitude(e.target.value)}
+		type="text"
+		value={location}
+		onChange={(e) => setLocation(e.target.value)}
 		/>
 		</div>
 
@@ -394,24 +409,11 @@ export const RegisterPage = () => {
 		</div>
 
 		<div className="form-control">
-		<label>Latitude</label>
+		<label>Address</label>
 		<input
-		type="number" 
-		min="-90"
-		max="90"
-		value={latitude}
-		onChange={(e) => setLatitude(e.target.value)}
-		/>
-		</div>
-
-		<div className="form-control">
-		<label>Longitude</label>
-		<input
-		type="number" 
-		min="-180"
-		max="180"
-		value={longitude}
-		onChange={(e) => setLongitude(e.target.value)}
+		type="text"
+		value={location}
+		onChange={(e) => setLocation(e.target.value)}
 		/>
 		</div>
 

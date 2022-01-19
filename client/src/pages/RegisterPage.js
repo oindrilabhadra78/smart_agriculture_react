@@ -57,7 +57,7 @@ export const RegisterPage = () => {
 	const ipfs = create({ host: 'ipfs.infura.io', port: '5001', protocol: 'https', apiPath: '/api/v0' });
 
 	// set the Geocoding API key
-	Geocode.setApiKey("");
+	Geocode.setApiKey("AIzaSyDvik3bLzkTW1D9opqPSVjp4fA1c-BGDiw");
 	Geocode.setRegion("in");
 
 	useEffect(() => {

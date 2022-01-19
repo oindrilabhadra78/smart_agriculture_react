@@ -1294,7 +1294,7 @@
                         "name": "tx",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 5867,
+                        "referencedDeclaration": 6162,
                         "src": "1113:2:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_transaction",
@@ -1465,7 +1465,7 @@
                           "name": "tx",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 5867,
+                          "referencedDeclaration": 6162,
                           "src": "1228:2:5",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_transaction",
@@ -1551,7 +1551,7 @@
                           "name": "tx",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 5867,
+                          "referencedDeclaration": 6162,
                           "src": "1260:2:5",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_transaction",
@@ -3972,7 +3972,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 5867,
+                                  "referencedDeclaration": 6162,
                                   "type": "tx",
                                   "value": "tx"
                                 },
@@ -4202,7 +4202,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 5867,
+                                  "referencedDeclaration": 6162,
                                   "type": "tx",
                                   "value": "tx"
                                 },
@@ -4300,7 +4300,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 5867,
+                                  "referencedDeclaration": 6162,
                                   "type": "tx",
                                   "value": "tx"
                                 },
@@ -5536,12 +5536,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x3591a2C2B4585aC7b04cc333F29e4838892A6E31",
-      "transactionHash": "0x5fff9f50eab84c8fa7e31df673ea29d923bde987d0f36732bc4d5856d801f420"
+      "address": "0xb5d1C9C01e55baF08DEeFfDEd59658A9cB59fd55",
+      "transactionHash": "0x856613b918f43daa486d435468421dad4d653a84388eb6ce080c3570ee548c30"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-01-03T16:29:10.488Z",
+  "updatedAt": "2022-01-19T18:44:41.793Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

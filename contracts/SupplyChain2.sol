@@ -11,167 +11,205 @@ contract SupplyChain2 {
     Roles rc;
     SupplyChain sc;
     ColdStorageContract csc;
+
+    uint256 productID;
     
+    event ProductIDGeneratedFarmer(string);
+    event ProductIDGeneratedDistributor(string[]);
+    event ProductIDGeneratedRetailer(string[]);
+    event ProductIDGeneratedConsumer(string[]);
+
     constructor(address _rcaddress, address _scaddress, address _cscAddress) public {
         rc = Roles(_rcaddress);
         sc = SupplyChain(_scaddress);
         csc = ColdStorageContract(_cscAddress);
+        productID = 1;
     }
     
     modifier verifyReceiver(address _address, uint256 roleID) {
         require(rc.getRole(_address) == roleID, "Receiver role is incorrect");
         _;
     }
-    
-    function harvestItem (uint256 _productID) public 
-    {
-        string memory productIDFull = sc.getFullProductID(string(abi.encodePacked("-1-", HelperMethods.integerToString(_productID))));
-        
-        SupplyChain.Item memory plantedItem = sc.getItems(productIDFull);
-        require(plantedItem.ownerID == tx.origin, "Only owner farmer can call");
-        sc.removeFromArray(productIDFull);
-        string memory productIDHarvested = string(abi.encodePacked(HelperMethods.integerToString(plantedItem.weight), "-2-", HelperMethods.integerToString(_productID)));
-        sc.pushInArray(productIDHarvested);
-        
-        sc.insertItem(plantedItem.ownerID, plantedItem.farmerID, plantedItem.coldStorageId, plantedItem.distributorID, plantedItem.retailerID, 
-        plantedItem.consumerID, plantedItem.productType, plantedItem.weight, SupplyChain.State.Harvested, productIDHarvested);
-        
-        sc.deleteItem(productIDFull);
+
+    modifier validProduct(string _productType) {
+        require(sc.getSerialNumber(_productType) > 0, "Crop not allowed in system");
+        _;
     }
-    
-    function storeItem (uint256 _productID, uint256 _weight, address _coldStorageId) public payable
-    verifyReceiver(_coldStorageId, rc.coldStorageRoleID())
-    {
-        string memory productIDFull = sc.getFullProductID(string(abi.encodePacked("-2-", HelperMethods.integerToString(_productID))));
-        SupplyChain.Item memory harvestedItem = sc.getItems(productIDFull);
+
+    /*function addFirstItems(string newProductID, string _productType, uint256 _weight) private {
+        sc.insertNewId(tx.origin, newProductID, _productType, 1);
+        sc.insertItem(tx.origin, tx.origin,address(0),address(0),address(0), _productType, _weight, newProductID, 1);
+    }*/
+
+    function withdrawProductFromFarmer(string _productName, uint256 _weight, address _owner, address _receiver, uint256 sz) private {
+        string[] memory ids = sc.getAllProductsPerOwner(_productName, 1, _owner);
+        uint256 weightPresent = 0;
         
-        require(harvestedItem.ownerID == tx.origin, "Only owner farmer can call");
-        require(_weight <= harvestedItem.weight, "Invalid weight provided");
-        require(msg.value >= csc.getColdStoragePrice(_coldStorageId), "Insufficient ethers");
+        string memory newId;
+        string[] memory newIds = new string[](sz);
+
+        for (uint256 i = ids.length; i > 0 && weightPresent < _weight; i--) {
+            SupplyChain.Item memory currentItem = sc.getItems(ids[i-1]);
+            newId = string(abi.encodePacked(ids[i-1],"-",HelperMethods.integerToString(currentItem.parts)));
+            newIds[sz + i - 1 - ids.length] = newId;
+             
+            if (weightPresent + currentItem.weight <= _weight) {
+                weightPresent = weightPresent + currentItem.weight;
+                sc.insertItem(_receiver, currentItem.farmerID, _receiver, address(0), address(0), currentItem.productType, currentItem.weight, newId, 1);
+                sc.insertNewId(_receiver, newId, _productName, 2);
+                sc.deleteItem(ids[i-1]);
+            } else {
+                uint256 wt = _weight - weightPresent;
+                sc.updateCurrentItem(ids[i-1],wt);
+                sc.insertItem(_receiver, currentItem.farmerID, _receiver, address(0), address(0), currentItem.productType, wt, newId, 1);
+                sc.insertNewId(_receiver, newId, _productName, 2);
+                weightPresent = weightPresent + currentItem.weight + wt;
+            }
+        }
         
-        string memory productIDStored = string(abi.encodePacked(HelperMethods.integerToString(_weight), "-3-", HelperMethods.integerToString(_productID)));
-        string memory productIDHarvested = string(abi.encodePacked(HelperMethods.integerToString(harvestedItem.weight - _weight), "-2-", HelperMethods.integerToString(_productID)));
-        
-        sc.removeFromArray(productIDFull);
-        sc.pushInArray(productIDStored);
-        sc.pushInArray(productIDHarvested);
-        
-        harvestedItem.weight = harvestedItem.weight - _weight;
-        sc.insertItem(harvestedItem.ownerID, harvestedItem.farmerID, address(0), address(0), address(0), address(0), harvestedItem.productType, harvestedItem.weight, 
-        SupplyChain.State.Harvested, productIDHarvested);
-        
-        harvestedItem.weight = _weight;
-        sc.insertItem(harvestedItem.ownerID, harvestedItem.farmerID, _coldStorageId, address(0), address(0), address(0), harvestedItem.productType, harvestedItem.weight, 
-        SupplyChain.State.Stored, productIDStored);
-        
-        sc.deleteItem(productIDFull);
-        
-        _coldStorageId.transfer(csc.getColdStoragePrice(_coldStorageId));
-        tx.origin.transfer(msg.value - csc.getColdStoragePrice(_coldStorageId));
+        if (weightPresent == _weight) {
+            sc.deleteFromOwner(_productName, _owner, 1, ids.length-i);
+        } else {
+            sc.deleteFromOwner(_productName, _owner, 1, ids.length-i-1);
+        }
+
+        emit ProductIDGeneratedDistributor(newIds);
     }
-    
-    function sellToDistributor (uint256 _productID, uint256 _weight, address _farmerId) public payable 
+
+    function withdrawProductFromDistributor(string _productName, uint256 _weight, address _owner, address _receiver, uint256 sz) private {
+        string[] memory ids = sc.getAllProductsPerOwner(_productName, 2, _owner);
+        uint256 weightPresent = 0;
+        
+        string memory newId;
+        string[] memory newIds = new string[](sz);
+
+        for (uint256 i = ids.length; i > 0 && weightPresent < _weight; i--) {
+            SupplyChain.Item memory currentItem = sc.getItems(ids[i-1]);
+            newId = string(abi.encodePacked(ids[i-1],"-",HelperMethods.integerToString(currentItem.parts)));
+            newIds[sz + i - 1 - ids.length] = newId;
+             
+            if (weightPresent + currentItem.weight <= _weight) {
+                weightPresent = weightPresent + currentItem.weight;
+                sc.insertItem(_receiver, currentItem.farmerID, currentItem.distributorID, _receiver, address(0), currentItem.productType, currentItem.weight, newId, 1);
+                sc.insertNewId(_receiver, newId, _productName, 3);
+                sc.deleteItem(ids[i-1]);
+            } else {
+                uint256 wt = _weight - weightPresent;
+                sc.updateCurrentItem(ids[i-1],wt);
+                sc.insertItem(_receiver, currentItem.farmerID, currentItem.distributorID, _receiver, address(0), currentItem.productType, wt, newId, 1);
+                sc.insertNewId(_receiver, newId, _productName, 3);
+                weightPresent = weightPresent + currentItem.weight + wt;
+            }
+        }
+        
+        if (weightPresent == _weight) {
+            sc.deleteFromOwner(_productName, _owner, 2, ids.length-i);
+        } else {
+            sc.deleteFromOwner(_productName, _owner, 2, ids.length-i-1);
+        }
+
+        emit ProductIDGeneratedRetailer(newIds);
+    }
+
+    function withdrawProductFromRetailer(string _productName, uint256 _weight, address _owner, address _receiver, uint256 sz) private {
+        string[] memory ids = sc.getAllProductsPerOwner(_productName, 3, _owner);
+        uint256 weightPresent = 0;
+        
+        string memory newId;
+        string[] memory newIds = new string[](sz);
+
+        for (uint256 i = ids.length; i > 0 && weightPresent < _weight; i--) {
+            SupplyChain.Item memory currentItem = sc.getItems(ids[i-1]);
+            newId = string(abi.encodePacked(ids[i-1],"-",HelperMethods.integerToString(currentItem.parts)));
+            newIds[sz + i - 1 - ids.length] = newId;
+             
+            if (weightPresent + currentItem.weight <= _weight) {
+                weightPresent = weightPresent + currentItem.weight;
+                sc.insertItem(_receiver, currentItem.farmerID, currentItem.distributorID, currentItem.retailerID, _receiver, currentItem.productType, currentItem.weight, newId, 1);
+                sc.insertNewId(_receiver, newId, _productName, 4);
+                sc.deleteItem(ids[i-1]);
+            } else {
+                uint256 wt = _weight - weightPresent;
+                sc.updateCurrentItem(ids[i-1],wt);
+                sc.insertItem(_receiver, currentItem.farmerID, currentItem.distributorID, currentItem.retailerID, _receiver, currentItem.productType, wt, newId, 1);
+                sc.insertNewId(_receiver, newId, _productName, 4);
+                weightPresent = weightPresent + currentItem.weight + wt;
+            }
+        }
+        
+        if (weightPresent == _weight) {
+            sc.deleteFromOwner(_productName, _owner, 3, ids.length-i);
+        } else {
+            sc.deleteFromOwner(_productName, _owner, 3, ids.length-i-1);
+        }
+
+        emit ProductIDGeneratedConsumer(newIds);
+    }
+
+    function harvestItem (
+        string _productType,
+        uint256 _weight
+    ) public
+    verifyReceiver(tx.origin, rc.farmerRoleID()) 
+    validProduct(_productType)
+    {
+        string memory newProductID = HelperMethods.integerToString(productID);
+        sc.insertNewId(tx.origin, newProductID, _productType, 1);
+        sc.insertItem(tx.origin, tx.origin,address(0),address(0),address(0), _productType, _weight, newProductID, 1);
+        productID++;
+
+        emit ProductIDGeneratedFarmer(newProductID);
+    }
+
+    function buyFromFarmer(string _productName, uint256 _weight, address _farmerId)
+    public payable
     verifyReceiver(tx.origin, rc.distributorRoleID())
-    {
-        string memory productIDFull = sc.getFullProductID(string(abi.encodePacked("-2-", HelperMethods.integerToString(_productID))));
-        SupplyChain.Item memory harvestedItem = sc.getItems(productIDFull);
-        
-        require(harvestedItem.ownerID == _farmerId, "Wrong owner farmer");
-        require(_weight <= harvestedItem.weight, "Invalid weight provided");
-        
-        SupplyChain.Crop memory crop = sc.getCropPrices(harvestedItem.productType);
-        
+    validProduct(_productName) {
+        SupplyChain.Crop memory crop = sc.getCropPrices(_productName);        
         require(crop.priceForDistributor > 0, "Price not set");
-        require(crop.priceForDistributor <= msg.value, "Insufficient ethers");
+        require(crop.priceForDistributor * _weight <= msg.value, "Low on ethers");
+
+        uint256 sz = sc.checkAvailability(_productName, _weight, _farmerId, 1);
         
-        _farmerId.transfer(crop.priceForDistributor);
-        tx.origin.transfer(msg.value - crop.priceForDistributor);
-        
-        string memory productIDHarvested = string(abi.encodePacked(HelperMethods.integerToString(harvestedItem.weight - _weight), "-2-", HelperMethods.integerToString(_productID)));
-        string memory productIDDistributor = string(abi.encodePacked(HelperMethods.integerToString(_weight), "-4-", HelperMethods.integerToString(_productID)));
-        
-        sc.removeFromArray(productIDFull);
-        sc.pushInArray(productIDHarvested);
-        sc.pushInArray(productIDDistributor);
-        
-        harvestedItem.weight = harvestedItem.weight - _weight;
-        sc.insertItem(harvestedItem.ownerID, harvestedItem.farmerID, harvestedItem.coldStorageId, address(0), address(0), address(0), harvestedItem.productType, harvestedItem.weight, 
-        SupplyChain.State.Harvested, productIDHarvested);
-        
-        harvestedItem.weight = _weight;
-        sc.insertItem(tx.origin, harvestedItem.farmerID, harvestedItem.coldStorageId, tx.origin, address(0), address(0), harvestedItem.productType, harvestedItem.weight, 
-        SupplyChain.State.SoldToDistributor, productIDDistributor);
-        
-        sc.deleteItem(productIDFull);
-    }
+        require(sz > 0, "Low on product");
+        withdrawProductFromFarmer(_productName, _weight, _farmerId, tx.origin, sz);
     
-    function sellToRetailer (uint256 _productID, uint256 _weight, address _distributorId) public payable 
+        _farmerId.transfer(crop.priceForDistributor*_weight);
+        tx.origin.transfer(msg.value - crop.priceForDistributor*_weight);
+    }
+
+    function buyFromDistributor(string _productName, uint256 _weight, address _distributorId)
+    public payable
     verifyReceiver(tx.origin, rc.retailerRoleID())
-    {
-        string memory productIDFull = sc.getFullProductID(string(abi.encodePacked("-4-", HelperMethods.integerToString(_productID))));
-        SupplyChain.Item memory distributedItem = sc.getItems(productIDFull);
-        
-        require(distributedItem.ownerID == _distributorId, "Wrong owner distributor");
-        require(_weight <= distributedItem.weight, "Invalid weight provided");
-        
-        SupplyChain.Crop memory crop = sc.getCropPrices(distributedItem.productType);
-        
+    validProduct(_productName) {
+        SupplyChain.Crop memory crop = sc.getCropPrices(_productName);        
         require(crop.priceForRetailer > 0, "Price not set");
-        require(crop.priceForRetailer <= msg.value, "Insufficient ethers");
+        require(crop.priceForRetailer * _weight <= msg.value, "Low on ethers");
+
+        uint256 sz = sc.checkAvailability(_productName, _weight, _distributorId, 2);
         
-        _distributorId.transfer(crop.priceForRetailer);
-        tx.origin.transfer(msg.value - crop.priceForRetailer);
+        require(sz > 0, "Low on product");
+        withdrawProductFromDistributor(_productName, _weight, _distributorId, tx.origin, sz);
         
-        string memory productIDDistributor = string(abi.encodePacked(HelperMethods.integerToString(distributedItem.weight - _weight), "-4-", HelperMethods.integerToString(_productID)));
-        string memory productIDRetailer = string(abi.encodePacked(HelperMethods.integerToString(_weight), "-5-", HelperMethods.integerToString(_productID)));
+        _distributorId.transfer(crop.priceForRetailer*_weight);
+        tx.origin.transfer(msg.value - crop.priceForRetailer*_weight);
+    }
+
+    function buyFromRetailer(string _productName, uint256 _weight, address _retailerId)
+    public payable
+    verifyReceiver(tx.origin, rc.consumerRoleID())
+    validProduct(_productName) {
+        SupplyChain.Crop memory crop = sc.getCropPrices(_productName);        
+        require(crop.priceForConsumer > 0, "Price not set");
+        require(crop.priceForConsumer * _weight <= msg.value, "Low on ethers");
+
+        uint256 sz = sc.checkAvailability(_productName, _weight, _retailerId, 3);
         
-        sc.removeFromArray(productIDFull);
-        sc.pushInArray(productIDDistributor);
-        sc.pushInArray(productIDRetailer);
+        require(sz > 0, "Low on product");
+        withdrawProductFromRetailer(_productName, _weight, _retailerId, tx.origin, sz);
         
-        distributedItem.weight = distributedItem.weight - _weight;
-        sc.insertItem(distributedItem.ownerID, distributedItem.farmerID, distributedItem.coldStorageId, distributedItem.distributorID, address(0), address(0), distributedItem.productType, distributedItem.weight, 
-        SupplyChain.State.SoldToDistributor, productIDDistributor);
-        
-        distributedItem.weight = _weight;
-        sc.insertItem(tx.origin, distributedItem.farmerID, distributedItem.coldStorageId, distributedItem.distributorID, tx.origin, address(0), distributedItem.productType, distributedItem.weight, 
-        SupplyChain.State.SoldToRetailer, productIDRetailer);
-        
-        sc.deleteItem(productIDFull);
+        _retailerId.transfer(crop.priceForConsumer*_weight);
+        tx.origin.transfer(msg.value - crop.priceForConsumer*_weight);
     }
     
-    function sellToConsumer (uint256 _productID, uint256 _weight, address _retailerId) public payable 
-    verifyReceiver(tx.origin, rc.consumerRoleID())
-    {
-        string memory productIDFull = sc.getFullProductID(string(abi.encodePacked("-5-", HelperMethods.integerToString(_productID))));
-        SupplyChain.Item memory retailItem = sc.getItems(productIDFull);
-        
-        require(retailItem.ownerID == _retailerId, "Wrong owner retailer");
-        require(_weight <= retailItem.weight, "Invalid weight provided");
-        
-        SupplyChain.Crop memory crop = sc.getCropPrices(retailItem.productType);
-        
-        require(crop.priceForConsumer > 0, "Price not set");
-        require(crop.priceForConsumer <= msg.value, "Insufficient ethers");
-        
-        _retailerId.transfer(crop.priceForConsumer);
-        tx.origin.transfer(msg.value - crop.priceForConsumer);
-        
-        string memory productIDRetailer = string(abi.encodePacked(HelperMethods.integerToString(retailItem.weight - _weight), "-5-", HelperMethods.integerToString(_productID)));
-        string memory productIDConsumer = string(abi.encodePacked(HelperMethods.integerToString(_weight), "-6-", HelperMethods.integerToString(_productID)));
-        
-        sc.removeFromArray(productIDFull);
-        sc.pushInArray(productIDRetailer);
-        sc.pushInArray(productIDConsumer);
-        
-        retailItem.weight = retailItem.weight - _weight;
-        sc.insertItem(retailItem.ownerID, retailItem.farmerID, retailItem.coldStorageId, retailItem.distributorID, retailItem.retailerID, address(0), retailItem.productType, retailItem.weight, 
-        SupplyChain.State.SoldToRetailer, productIDRetailer);
-        
-        retailItem.weight = _weight;
-        sc.insertItem(tx.origin, retailItem.farmerID, retailItem.coldStorageId, retailItem.distributorID, retailItem.retailerID, tx.origin, retailItem.productType, retailItem.weight, 
-        SupplyChain.State.SoldToConsumer, productIDConsumer);
-        
-        sc.deleteItem(productIDFull);
-    }
 }

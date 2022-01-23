@@ -39385,12 +39385,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x92752F0f809C27aaCb21e40954aC902d559e3EE6",
-      "transactionHash": "0x7730b625d7e93e477176439fe14cf3b3b72bc6da064b24184b5cfb252fd17b25"
+      "address": "0xB5E274eb01fa735b57e9886626FF93DB09D6B827",
+      "transactionHash": "0x902d27ff7ab597958be7a8a663939d9a99bad0b2158b9102bb08143438ec841b"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-01-19T18:44:41.858Z",
+  "updatedAt": "2022-01-22T14:31:46.012Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

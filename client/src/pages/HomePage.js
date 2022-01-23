@@ -33,6 +33,7 @@ export const HomePage = () => {
   const [isSeen5, setIsSeen5] = useState(false);
   const [isSeen6, setIsSeen6] = useState(false);
   const [isSeen7, setIsSeen7] = useState(false);
+  const [isSeen8, setIsSeen8] = useState(false);
   const [view1, setView1] = useState(false);
   const [view2, setView2] = useState(false);
   const [view3, setView3] = useState(false);
@@ -40,9 +41,86 @@ export const HomePage = () => {
   const [view5, setView5] = useState(false);
   const [view6, setView6] = useState(false);
   const [view7, setView7] = useState(false);
+  const [view8, setView8] = useState(false);
 
   const [address, setAddress] = useState("");
   const [data, setData] = useState();
+  const [crop, setCrop] = useState("");
+  const [cropTypes, setCropTypes] = useState({
+    '': 'Select',
+    'arecanut': 'Arecanut',
+    'arhar/tur': 'Arhar/Tur',
+    'bajra': 'Bajra',
+    'banana': 'Banana',
+    'barley': 'Barley',
+    'bhindi': 'Bhindi',
+    'black pepper': 'Black Pepper',
+    'blackgram': 'Blackgram',
+    'brinjal': 'Brinjal',
+    'cabbage': 'Cabbage',
+    'cardamom': 'Cardamom',
+    'carrot': 'Carrot',
+    'cashewnut': 'Cashewnut',
+    'castor seed': 'Castor Seed',
+    'chillies': 'Chillies',
+    'citrus fruit': 'Citrus Fruit',
+    'coconut': 'Coconut',
+    'coffee': 'Coffee',
+    'coriander': 'Coriander',
+    'cotton': 'Cotton',
+    'cowpea(lobia)': 'Cowpea (Lobia)',
+    'drum stick': 'Drum Stick',
+    'garlic': 'Garlic',
+    'ginger': 'Ginger',
+    'gram': 'Gram',
+    'grapes': 'Grapes',
+    'groundnut': 'Groundnut',
+    'guar seed': 'Guar Seed',
+    'horse-gram': 'Horse-Gram',
+    'jack fruit': 'Jack Fruit',
+    'jowar': 'Jowar',
+    'jute': 'Jute',
+    'khesari': 'Khesari',
+    'korra': 'Korra',
+    'lentil': 'Lentil',
+    'linseed': 'Linseed',
+    'maize': 'Maize',
+    'mango': 'Mango',
+    'masoor': 'Masoor',
+    'mesta': 'Mesta',
+    'mothbeans': 'Mothbeans',
+    'mungbean': 'Mungbean',
+    'niger seed': 'Niger Seed',
+    'onion': 'Onion',
+    'orange': 'Orange',
+    'papaya': 'Papaya',
+    'pineapple': 'Pineapple',
+    'pomegranate': 'Pomegranate',
+    'potato': 'Potato',
+    'ragi': 'Ragi',
+    'rapeseed &mustard': 'Rapeseed & Mustard',
+    'redish': 'Radish',
+    'rice': 'Rice',
+    'rubber': 'Rubber',
+    'safflower': 'Safflower',
+    'samai': 'Samai',
+    'sannhamp': 'Sannhamp',
+    'sesamum': 'Sesamum',
+    'small millets': 'Small Millets',
+    'soyabean': 'Soyabean',
+    'sugarcane': 'Sugarcane',
+    'sunflower': 'Sunflower',
+    'sweet potato': 'Sweet Potato',
+    'tapioca': 'Tapioca',
+    'tea': 'Tea',
+    'tobacco': 'Tobacco',
+    'tomato': 'Tomato',
+    'turmeric': 'Turmeric',
+    'turnip': 'Turnip',
+    'urad': 'Urad',
+    'varagu': 'Varagu',
+    'wheat': 'Wheat'
+  });
 
   const toggle = () => {
     setIsOpen(!isOpen);
@@ -97,6 +175,13 @@ export const HomePage = () => {
     setData();
   };
 
+  const togglePopup8 = () => {
+    setIsSeen8(!isSeen8);
+    setAddress("");
+    setView8(false);
+    setData();
+  };
+
   var networkId;
   var formDesign =
   <div className="form-control">
@@ -106,7 +191,19 @@ export const HomePage = () => {
   onChange={(e) => setAddress(e.target.value)} />   
   </div>;
 
-  const stateName = { 0: "None", 1: "Planted", 2: "Harvested", 3: "Stored", 4: "Sold To Distributor", 5: "Sold To Retailer", 6: "Sold To Consumer" };
+  var formDesign2 =
+  <div className="form-control">
+  <label>Crop Name</label>
+  <select className="drop-down" value={address} onChange={(e) => setAddress(e.target.value)}>
+  {
+    Object.entries(cropTypes).map(([key, value]) => {
+      return (
+        <option value={key}>{value}</option>
+        )
+    })          
+  }
+  </select>
+  </div>;
 
   const getFarmerDetails = async (event) => {
     event.preventDefault();
@@ -225,6 +322,23 @@ export const HomePage = () => {
     setData(obj);
 
     setView7(true);
+  };
+
+  const getCropPricing = async (event) => {
+    event.preventDefault();
+
+    networkId = await web3.eth.net.getId();
+    const deployedNetwork = SupplyChain.networks[networkId];
+
+    const instance = new web3.eth.Contract(
+      SupplyChain.abi,
+      deployedNetwork && deployedNetwork.address
+      );
+
+    let obj = await instance.methods.getCropPrices(address).call();
+    setData(obj);
+
+    setView8(true);
   };
 
   return (
@@ -434,14 +548,12 @@ Trace Item by Id
     {view7 && <div className="profile" style={{minWidth: "500px"}}>
     <h2>Item</h2>
     <p>Owner ID: {data.ownerID} </p>  
-    <p>Farmer ID= {data.farmerID} </p>
-    <p>Cold Storage ID: {data.coldStorageId} </p>
+    <p>Farmer ID: {data.farmerID} </p>
     <p>Distributor ID: {data.distributorID} </p>  
-    <p>Retailer ID= {data.retailerID} </p>
+    <p>Retailer ID: {data.retailerID} </p>
     <p>Consumer ID: {data.consumerID} </p>
-    <p>Product Type= {data.productType} </p>
+    <p>Product Type: {data.productType} </p>
     <p>Weight: {data.weight} </p>
-    <p>Item State: {stateName[data.itemState]}</p>
     </div>
   } 
   </form>
@@ -450,6 +562,35 @@ Trace Item by Id
   </>
 }
 handleClose={togglePopup7}
+/>
+}
+
+<button className="home-button" onClick={togglePopup8}>
+Get Crop Prices
+</button>
+{isSeen8 && <Popup
+  content={
+    <>
+    <div className="container">
+    <form className="add-form">
+    {formDesign2}
+    <button
+    className="btn-grad"
+    style={{ margin: "auto", marginTop: "30px", outline: 'none', border: 'none' }}
+    onClick={getCropPricing}>Submit</button>
+    {view8 && <div className="profile">
+    <h2>Prices of {cropTypes[address]}</h2>
+    <p>Price for Distributor: {data.priceForDistributor} wei </p>
+    <p>Price for Retailer: {data.priceForRetailer} wei </p>
+    <p>Price for Consumer: {data.priceForConsumer} wei </p>
+    </div>
+  }
+  </form>
+  </div>     
+
+  </>
+}
+handleClose={togglePopup8}
 />
 }
 
@@ -482,6 +623,11 @@ Get All Cold Storages
 <Link to="/GetAll/officials" style={{ textDecoration: 'none' }}>
 <button className="home-button">
 Get All Government Officials
+</button>
+</Link>
+<Link to="/CropOwners" style={{ textDecoration: 'none' }}>
+<button className="home-button">
+Get All Crop Owners
 </button>
 </Link>
 </div>

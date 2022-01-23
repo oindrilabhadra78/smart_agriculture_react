@@ -1,4 +1,3 @@
-import NavBar from "./Navbar/NavBar";
 import SupplyChain2 from "../contracts/SupplyChain2.json";
 import Roles from "../contracts/Roles.json";
 import { Card, ListGroup } from "react-bootstrap";
@@ -18,11 +17,86 @@ export const BuyItem = () => {
     const [instance, setInstance] = useState();
     const [roleId, setRoleId] = useState(0);
     const [weight, setWeight] = useState(0);
-    const [id, setId] = useState(0);
+    const [crop, setCrop] = useState("");
     const [loading, setLoading] = useState(true);
     const [ethValue, setEthValue] = useState(0);
     const [heading, setHeading] = useState("");
     const [seller, setSeller] = useState("");
+    const [cropTypes, setCropTypes] = useState({
+        '': 'Select',
+        'arecanut': 'Arecanut',
+        'arhar/tur': 'Arhar/Tur',
+        'bajra': 'Bajra',
+        'banana': 'Banana',
+        'barley': 'Barley',
+        'bhindi': 'Bhindi',
+        'black pepper': 'Black Pepper',
+        'blackgram': 'Blackgram',
+        'brinjal': 'Brinjal',
+        'cabbage': 'Cabbage',
+        'cardamom': 'Cardamom',
+        'carrot': 'Carrot',
+        'cashewnut': 'Cashewnut',
+        'castor seed': 'Castor Seed',
+        'chillies': 'Chillies',
+        'citrus fruit': 'Citrus Fruit',
+        'coconut': 'Coconut',
+        'coffee': 'Coffee',
+        'coriander': 'Coriander',
+        'cotton': 'Cotton',
+        'cowpea(lobia)': 'Cowpea (Lobia)',
+        'drum stick': 'Drum Stick',
+        'garlic': 'Garlic',
+        'ginger': 'Ginger',
+        'gram': 'Gram',
+        'grapes': 'Grapes',
+        'groundnut': 'Groundnut',
+        'guar seed': 'Guar Seed',
+        'horse-gram': 'Horse-Gram',
+        'jack fruit': 'Jack Fruit',
+        'jowar': 'Jowar',
+        'jute': 'Jute',
+        'khesari': 'Khesari',
+        'korra': 'Korra',
+        'lentil': 'Lentil',
+        'linseed': 'Linseed',
+        'maize': 'Maize',
+        'mango': 'Mango',
+        'masoor': 'Masoor',
+        'mesta': 'Mesta',
+        'mothbeans': 'Mothbeans',
+        'mungbean': 'Mungbean',
+        'niger seed': 'Niger Seed',
+        'onion': 'Onion',
+        'orange': 'Orange',
+        'papaya': 'Papaya',
+        'pineapple': 'Pineapple',
+        'pomegranate': 'Pomegranate',
+        'potato': 'Potato',
+        'ragi': 'Ragi',
+        'rapeseed &mustard': 'Rapeseed & Mustard',
+        'redish': 'Radish',
+        'rice': 'Rice',
+        'rubber': 'Rubber',
+        'safflower': 'Safflower',
+        'samai': 'Samai',
+        'sannhamp': 'Sannhamp',
+        'sesamum': 'Sesamum',
+        'small millets': 'Small Millets',
+        'soyabean': 'Soyabean',
+        'sugarcane': 'Sugarcane',
+        'sunflower': 'Sunflower',
+        'sweet potato': 'Sweet Potato',
+        'tapioca': 'Tapioca',
+        'tea': 'Tea',
+        'tobacco': 'Tobacco',
+        'tomato': 'Tomato',
+        'turmeric': 'Turmeric',
+        'turnip': 'Turnip',
+        'urad': 'Urad',
+        'varagu': 'Varagu',
+        'wheat': 'Wheat'
+    });
 
     var networkId;
 
@@ -70,39 +144,42 @@ export const BuyItem = () => {
             await getRole();
             
             if (heading === "") {
-                if (roleId === 2) {
+                if (roleId == 2) {
                     setHeading("Buy Item from Farmer");
-                } else if (roleId === 3) {
+                } else if (roleId == 3) {
                     setHeading("Buy Item from Distributor");
-                } else if (roleId === 4) {
+                } else if (roleId == 4) {
                     setHeading("Buy Item from Retailer");
                 }
             } else {
-                if (roleId === 2 || roleId === 3 || roleId === 4) {
+                if (roleId == 2 || roleId == 3 || roleId == 4) {
                     setLoading(false);
                 }
             }
         };
 
         initialize();
-    }, [roleId, heading]);
+    }, [roleId, heading, loading]);
 
 
     const buyItem = async (event) => {
         event.preventDefault();
 
-        if (roleId === 2) {
-            await instance.methods
-                .sellToDistributor(id, weight, seller)
+        if (roleId == 2) {
+            const receipt = await instance.methods
+                .buyFromFarmer(crop, weight, seller)
                 .send({ from: account, value: ethValue });
-        } else if (roleId === 3) {
-            await instance.methods
-                .sellToRetailer(id, weight, seller)
+            alert("The Product IDs of the crop you purchased are " + receipt.events.ProductIDGeneratedDistributor.returnValues[0]);
+        } else if (roleId == 3) {
+            const receipt = await instance.methods
+                .buyFromDistributor(crop, weight, seller)
                 .send({ from: account, value: ethValue });
-        } else if (roleId === 4) {
-            await instance.methods
-                .sellToConsumer(id, weight, seller)
+            alert("The Product IDs of the crop you purchased are " + receipt.events.ProductIDGeneratedRetailer.returnValues[0]);
+        } else if (roleId == 4) {
+            const receipt = await instance.methods
+                .buyFromRetailer(crop, weight, seller)
                 .send({ from: account, value: ethValue });
+            alert("The Product IDs of the crop you purchased are " + receipt.events.ProductIDGeneratedConsumer.returnValues[0]);
         }
     };
 
@@ -116,13 +193,17 @@ export const BuyItem = () => {
         <form className="add-form">
 
         <div className="form-control">
-        <label>Product ID</label>
-        <input
-        type="number" 
-        min="0"
-        value={id}
-        onChange={(e) => setId(e.target.value)}
-        />
+        <label>Crop Name</label>
+        <select className="drop-down" value={crop} onChange={(e) => setCrop(e.target.value)}>
+        {
+            Object.entries(cropTypes).map(([key, value]) => {
+                return (
+                    <option value={key}>{value}</option>
+                    )
+            })          
+        }
+        
+        </select>
         </div>
 
         <div className="form-control">

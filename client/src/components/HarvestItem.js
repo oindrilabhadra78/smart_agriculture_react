@@ -13,6 +13,83 @@ export const HarvestItem = () => {
 
     const [instance, setInstance] = useState();
     const [id, setId] = useState(0);
+    const [crop, setCrop] = useState("");
+    const [quantity, setQuantity] = useState(0);
+    const [cropTypes, setCropTypes] = useState({
+        '': 'Select',
+        'arecanut': 'Arecanut',
+        'arhar/tur': 'Arhar/Tur',
+        'bajra': 'Bajra',
+        'banana': 'Banana',
+        'barley': 'Barley',
+        'bhindi': 'Bhindi',
+        'black pepper': 'Black Pepper',
+        'blackgram': 'Blackgram',
+        'brinjal': 'Brinjal',
+        'cabbage': 'Cabbage',
+        'cardamom': 'Cardamom',
+        'carrot': 'Carrot',
+        'cashewnut': 'Cashewnut',
+        'castor seed': 'Castor Seed',
+        'chillies': 'Chillies',
+        'citrus fruit': 'Citrus Fruit',
+        'coconut': 'Coconut',
+        'coffee': 'Coffee',
+        'coriander': 'Coriander',
+        'cotton': 'Cotton',
+        'cowpea(lobia)': 'Cowpea (Lobia)',
+        'drum stick': 'Drum Stick',
+        'garlic': 'Garlic',
+        'ginger': 'Ginger',
+        'gram': 'Gram',
+        'grapes': 'Grapes',
+        'groundnut': 'Groundnut',
+        'guar seed': 'Guar Seed',
+        'horse-gram': 'Horse-Gram',
+        'jack fruit': 'Jack Fruit',
+        'jowar': 'Jowar',
+        'jute': 'Jute',
+        'khesari': 'Khesari',
+        'korra': 'Korra',
+        'lentil': 'Lentil',
+        'linseed': 'Linseed',
+        'maize': 'Maize',
+        'mango': 'Mango',
+        'masoor': 'Masoor',
+        'mesta': 'Mesta',
+        'mothbeans': 'Mothbeans',
+        'mungbean': 'Mungbean',
+        'niger seed': 'Niger Seed',
+        'onion': 'Onion',
+        'orange': 'Orange',
+        'papaya': 'Papaya',
+        'pineapple': 'Pineapple',
+        'pomegranate': 'Pomegranate',
+        'potato': 'Potato',
+        'ragi': 'Ragi',
+        'rapeseed &mustard': 'Rapeseed & Mustard',
+        'redish': 'Radish',
+        'rice': 'Rice',
+        'rubber': 'Rubber',
+        'safflower': 'Safflower',
+        'samai': 'Samai',
+        'sannhamp': 'Sannhamp',
+        'sesamum': 'Sesamum',
+        'small millets': 'Small Millets',
+        'soyabean': 'Soyabean',
+        'sugarcane': 'Sugarcane',
+        'sunflower': 'Sunflower',
+        'sweet potato': 'Sweet Potato',
+        'tapioca': 'Tapioca',
+        'tea': 'Tea',
+        'tobacco': 'Tobacco',
+        'tomato': 'Tomato',
+        'turmeric': 'Turmeric',
+        'turnip': 'Turnip',
+        'urad': 'Urad',
+        'varagu': 'Varagu',
+        'wheat': 'Wheat'
+    });
 
     useEffect(() => {
         const initialize = async () => {
@@ -39,35 +116,50 @@ export const HarvestItem = () => {
 
     const harvestItem = async (event) => {
         event.preventDefault();
-        await instance.methods
-        .harvestItem(id)
+        const receipt = await instance.methods
+        .harvestItem(crop, quantity)
         .send({from: account});
+
+        alert("The Product ID generated for your crop is " + receipt.events.ProductIDGeneratedFarmer.returnValues[0]);
     };
 
     return (
         <div className="container">
-		<div className="header">Harvest Item</div>
-		<form className="add-form">
+        <div className="header">Harvest Item</div>
+        <form className="add-form">
+        <div className="form-control">
+        <label>Crop Name</label>
+        <select className="drop-down" value={crop} onChange={(e) => setCrop(e.target.value)}>
+        {
+            Object.entries(cropTypes).map(([key, value]) => {
+                return (
+                    <option value={key}>{value}</option>
+                    )
+            })          
+        }
+        
+        </select>
+        </div>
 
-		<div className="form-control">
-		<label>Product ID</label>
-		<input
-		type="number" 
-		min="0"
-		value={id}
-		onChange={(e) => setId(e.target.value)}
-		/>
-		</div>
+        <div className="form-control">
+        <label>Quantity</label>
+        <input
+        type="number" 
+        min="0"
+        value={quantity}
+        onChange={(e) => setQuantity(e.target.value)}
+        />
+        </div>
 
-		<button
-		className="btn-grad"
-		style={{ marginLeft: "0px", marginTop: "30px", outline: 'none', border: 'none' }}
-		onClick={harvestItem}>
-		Submit
-		</button>
+        <button
+        className="btn-grad"
+        style={{ marginLeft: "0px", marginTop: "30px", outline: 'none', border: 'none' }}
+        onClick={harvestItem}>
+        Submit
+        </button>
 
-		</form>
-		</div>
+        </form>
+        </div>
 
     );
 };

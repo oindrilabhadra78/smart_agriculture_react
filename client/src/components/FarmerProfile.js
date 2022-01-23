@@ -94,19 +94,9 @@ export const FarmerProfile = () => {
                 </div>
 
                 <div>
-                <Link to="/PlantItem" style={{ textDecoration: 'none' }}>
-                <button className="btn-grad" style={{ border: 'none', outline: 'none', margin: "auto", marginTop: "50px" }}>
-                Plant Item
-                </button>
-                </Link>
                 <Link to="/HarvestItem" style={{ textDecoration: 'none' }}>
                 <button className="btn-grad" style={{ border: 'none', outline: 'none', margin: "auto", marginTop: "50px" }}>
                 Harvest Item
-                </button>
-                </Link>
-                <Link to="/StoreItem" style={{ textDecoration: 'none' }}>
-                <button className="btn-grad" style={{ border: 'none', outline: 'none', margin: "auto", marginTop: "50px" }}>
-                Store Item
                 </button>
                 </Link>
                 <Link to="/NearestSeller" style={{ textDecoration: 'none' }}>

@@ -3,26 +3,28 @@ pragma solidity ^0.4.22;
 pragma experimental ABIEncoderV2;
 
 import "./Roles.sol";
-import './ColdStorageContract.sol';
+import './FarmerContract.sol';
 import "./SupplyChain.sol";
 import "./HelperMethods.sol";
 
 contract SupplyChain2 {
     Roles rc;
     SupplyChain sc;
-    ColdStorageContract csc;
+    FarmerContract fc;
 
     uint256 productID;
+
+    mapping(string => mapping(string => string[])) statewiseProduction;
     
     event ProductIDGeneratedFarmer(string);
     event ProductIDGeneratedDistributor(string[]);
     event ProductIDGeneratedRetailer(string[]);
     event ProductIDGeneratedConsumer(string[]);
 
-    constructor(address _rcaddress, address _scaddress, address _cscAddress) public {
+    constructor(address _rcaddress, address _scaddress, address _fcaddress) public {
         rc = Roles(_rcaddress);
         sc = SupplyChain(_scaddress);
-        csc = ColdStorageContract(_cscAddress);
+        fc = FarmerContract(_fcaddress);
         productID = 1;
     }
     
@@ -157,6 +159,8 @@ contract SupplyChain2 {
         sc.insertNewId(tx.origin, newProductID, _productType, 1);
         sc.insertItem(tx.origin, tx.origin,address(0),address(0),address(0), _productType, _weight, newProductID, 1);
         productID++;
+        string memory stateOfResidence = fc.getState(tx.origin);
+        statewiseProduction[stateOfResidence][_productType].push(newProductID);
 
         emit ProductIDGeneratedFarmer(newProductID);
     }
@@ -210,6 +214,18 @@ contract SupplyChain2 {
         
         _retailerId.transfer(crop.priceForConsumer*_weight);
         tx.origin.transfer(msg.value - crop.priceForConsumer*_weight);
+    }
+
+    function monitorProductsCount(string state, string crop) public view returns (uint256) {
+        return statewiseProduction[state][crop].length;
+    }
+
+    function monitorProducts(string state, string crop, uint256 index) public view returns (string) {
+        return statewiseProduction[state][crop][index];
+    }
+
+    function monitorAllProducts(string state, string crop) public view returns (string[]) {
+        return statewiseProduction[state][crop];
     }
     
 }

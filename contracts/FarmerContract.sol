@@ -95,6 +95,10 @@ contract FarmerContract is Roles/*, usingProvable*/ {
         return (farmers[_address].latitude, farmers[_address].longitude);
     }
 
+    function getState(address _address) external view returns(string) {
+        return farmers[_address].stateOfResidence;
+    }
+
     function countFarmers() public view returns (uint256) {
         return farmerAccounts.length;
     }

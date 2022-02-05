@@ -35,7 +35,7 @@ module.exports = async function (deployer) {
     SupplyChain2,
     Roles.address,
     SupplyChain.address,
-    ColdStorageContract.address
+    FarmerContract.address
     );
 
   await deployer.deploy(
@@ -46,5 +46,4 @@ module.exports = async function (deployer) {
     RetailerContract.address,
     ColdStorageContract.address
     );
-
 };

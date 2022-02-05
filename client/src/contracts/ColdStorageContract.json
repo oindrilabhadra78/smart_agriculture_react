@@ -585,7 +585,7 @@
         "id": 3,
         "nodeType": "ImportDirective",
         "scope": 990,
-        "sourceUnit": 4141,
+        "sourceUnit": 4328,
         "src": "100:21:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -613,7 +613,7 @@
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_Roles_$4140",
+              "typeIdentifier": "t_contract$_Roles_$4327",
               "typeString": "contract Roles"
             },
             "typeName": {
@@ -621,10 +621,10 @@
               "id": 4,
               "name": "Roles",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 4140,
+              "referencedDeclaration": 4327,
               "src": "161:5:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Roles_$4140",
+                "typeIdentifier": "t_contract$_Roles_$4327",
                 "typeString": "contract Roles"
               }
             },
@@ -654,7 +654,7 @@
                       "referencedDeclaration": 5,
                       "src": "237:2:0",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_Roles_$4140",
+                        "typeIdentifier": "t_contract$_Roles_$4327",
                         "typeString": "contract Roles"
                       }
                     },
@@ -688,10 +688,10 @@
                         "name": "Roles",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4140,
+                        "referencedDeclaration": 4327,
                         "src": "242:5:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_Roles_$4140_$",
+                          "typeIdentifier": "t_type$_t_contract$_Roles_$4327_$",
                           "typeString": "type(contract Roles)"
                         }
                       },
@@ -705,13 +705,13 @@
                       "nodeType": "FunctionCall",
                       "src": "242:15:0",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_Roles_$4140",
+                        "typeIdentifier": "t_contract$_Roles_$4327",
                         "typeString": "contract Roles"
                       }
                     },
                     "src": "237:20:0",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_Roles_$4140",
+                      "typeIdentifier": "t_contract$_Roles_$4327",
                       "typeString": "contract Roles"
                     }
                   },
@@ -1227,7 +1227,7 @@
                                 "name": "tx",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 6162,
+                                "referencedDeclaration": 6427,
                                 "src": "800:2:0",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_magic_transaction",
@@ -1265,7 +1265,7 @@
                               "referencedDeclaration": 5,
                               "src": "789:2:0",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_contract$_Roles_$4140",
+                                "typeIdentifier": "t_contract$_Roles_$4327",
                                 "typeString": "contract Roles"
                               }
                             },
@@ -1276,7 +1276,7 @@
                             "lValueRequested": false,
                             "memberName": "getRole",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 4119,
+                            "referencedDeclaration": 4306,
                             "src": "789:10:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_external_view$_t_address_$returns$_t_uint256_$",
@@ -1313,7 +1313,7 @@
                               "referencedDeclaration": 5,
                               "src": "814:2:0",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_contract$_Roles_$4140",
+                                "typeIdentifier": "t_contract$_Roles_$4327",
                                 "typeString": "contract Roles"
                               }
                             },
@@ -1324,7 +1324,7 @@
                             "lValueRequested": false,
                             "memberName": "governmentID",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 4064,
+                            "referencedDeclaration": 4251,
                             "src": "814:15:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_external_view$__$returns$_t_uint256_$",
@@ -1385,10 +1385,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        6153,
-                        6154
+                        6418,
+                        6419
                       ],
-                      "referencedDeclaration": 6154,
+                      "referencedDeclaration": 6419,
                       "src": "781:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -1594,7 +1594,7 @@
                                 "name": "tx",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 6162,
+                                "referencedDeclaration": 6427,
                                 "src": "1024:2:0",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_magic_transaction",
@@ -1651,7 +1651,7 @@
                                   "name": "tx",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 6162,
+                                  "referencedDeclaration": 6427,
                                   "src": "1048:2:0",
                                   "typeDescriptions": {
                                     "typeIdentifier": "t_magic_transaction",
@@ -1689,7 +1689,7 @@
                                 "referencedDeclaration": 5,
                                 "src": "1037:2:0",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_contract$_Roles_$4140",
+                                  "typeIdentifier": "t_contract$_Roles_$4327",
                                   "typeString": "contract Roles"
                                 }
                               },
@@ -1700,7 +1700,7 @@
                               "lValueRequested": false,
                               "memberName": "getRole",
                               "nodeType": "MemberAccess",
-                              "referencedDeclaration": 4119,
+                              "referencedDeclaration": 4306,
                               "src": "1037:10:0",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_function_external_view$_t_address_$returns$_t_uint256_$",
@@ -1737,7 +1737,7 @@
                                 "referencedDeclaration": 5,
                                 "src": "1062:2:0",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_contract$_Roles_$4140",
+                                  "typeIdentifier": "t_contract$_Roles_$4327",
                                   "typeString": "contract Roles"
                                 }
                               },
@@ -1748,7 +1748,7 @@
                               "lValueRequested": false,
                               "memberName": "governmentID",
                               "nodeType": "MemberAccess",
-                              "referencedDeclaration": 4064,
+                              "referencedDeclaration": 4251,
                               "src": "1062:15:0",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_function_external_view$__$returns$_t_uint256_$",
@@ -1815,10 +1815,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        6153,
-                        6154
+                        6418,
+                        6419
                       ],
-                      "referencedDeclaration": 6154,
+                      "referencedDeclaration": 6419,
                       "src": "959:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -1955,7 +1955,7 @@
                         "name": "tx",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 6162,
+                        "referencedDeclaration": 6427,
                         "src": "1392:2:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_transaction",
@@ -2441,7 +2441,7 @@
                           "name": "tx",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 6162,
+                          "referencedDeclaration": 6427,
                           "src": "1740:2:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_transaction",
@@ -2821,7 +2821,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 6150,
+                            "referencedDeclaration": 6415,
                             "src": "1983:3:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -2875,10 +2875,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        6153,
-                        6154
+                        6418,
+                        6419
                       ],
-                      "referencedDeclaration": 6153,
+                      "referencedDeclaration": 6418,
                       "src": "1975:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -6365,7 +6365,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 6150,
+                            "referencedDeclaration": 6415,
                             "src": "4954:3:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -6419,10 +6419,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        6153,
-                        6154
+                        6418,
+                        6419
                       ],
-                      "referencedDeclaration": 6153,
+                      "referencedDeclaration": 6418,
                       "src": "4946:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -6472,7 +6472,7 @@
                               "name": "msg",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 6150,
+                              "referencedDeclaration": 6415,
                               "src": "5002:3:0",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_magic_message",
@@ -6630,7 +6630,7 @@
                                     "name": "msg",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 6150,
+                                    "referencedDeclaration": 6415,
                                     "src": "5115:3:0",
                                     "typeDescriptions": {
                                       "typeIdentifier": "t_magic_message",
@@ -9350,7 +9350,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 6150,
+                            "referencedDeclaration": 6415,
                             "src": "6806:3:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -9404,10 +9404,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        6153,
-                        6154
+                        6418,
+                        6419
                       ],
-                      "referencedDeclaration": 6153,
+                      "referencedDeclaration": 6418,
                       "src": "6798:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -9727,7 +9727,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 6150,
+                            "referencedDeclaration": 6415,
                             "src": "7126:3:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -9781,10 +9781,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        6153,
-                        6154
+                        6418,
+                        6419
                       ],
-                      "referencedDeclaration": 6153,
+                      "referencedDeclaration": 6418,
                       "src": "7118:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -9982,7 +9982,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 6150,
+                          "referencedDeclaration": 6415,
                           "src": "7321:3:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -10111,7 +10111,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 6150,
+                          "referencedDeclaration": 6415,
                           "src": "7365:3:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -11243,7 +11243,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 6150,
+                            "referencedDeclaration": 6415,
                             "src": "8173:3:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -11297,10 +11297,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        6153,
-                        6154
+                        6418,
+                        6419
                       ],
-                      "referencedDeclaration": 6153,
+                      "referencedDeclaration": 6418,
                       "src": "8165:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -12469,7 +12469,7 @@
                                         "referencedDeclaration": 5,
                                         "src": "10038:2:0",
                                         "typeDescriptions": {
-                                          "typeIdentifier": "t_contract$_Roles_$4140",
+                                          "typeIdentifier": "t_contract$_Roles_$4327",
                                           "typeString": "contract Roles"
                                         }
                                       },
@@ -12480,7 +12480,7 @@
                                       "lValueRequested": false,
                                       "memberName": "coldStorageRoleID",
                                       "nodeType": "MemberAccess",
-                                      "referencedDeclaration": 4061,
+                                      "referencedDeclaration": 4248,
                                       "src": "10038:20:0",
                                       "typeDescriptions": {
                                         "typeIdentifier": "t_function_external_view$__$returns$_t_uint256_$",
@@ -12522,7 +12522,7 @@
                                     "referencedDeclaration": 5,
                                     "src": "10017:2:0",
                                     "typeDescriptions": {
-                                      "typeIdentifier": "t_contract$_Roles_$4140",
+                                      "typeIdentifier": "t_contract$_Roles_$4327",
                                       "typeString": "contract Roles"
                                     }
                                   },
@@ -12533,7 +12533,7 @@
                                   "lValueRequested": false,
                                   "memberName": "addRole",
                                   "nodeType": "MemberAccess",
-                                  "referencedDeclaration": 4097,
+                                  "referencedDeclaration": 4284,
                                   "src": "10017:10:0",
                                   "typeDescriptions": {
                                     "typeIdentifier": "t_function_external_nonpayable$_t_address_$_t_uint256_$returns$__$",
@@ -12840,7 +12840,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 4141,
+          "SourceUnit": 4328,
           "absolutePath": "project:/contracts/Roles.sol",
           "file": "./Roles.sol",
           "scope": 990,
@@ -12887,7 +12887,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "Roles",
-                  "referencedDeclaration": 4140,
+                  "referencedDeclaration": 4327,
                   "type": "contract Roles"
                 },
                 "id": 4,
@@ -13015,7 +13015,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 4140,
+                                  "referencedDeclaration": 4327,
                                   "type": "type(contract Roles)",
                                   "value": "Roles"
                                 },
@@ -13539,10 +13539,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                6153,
-                                6154
+                                6418,
+                                6419
                               ],
-                              "referencedDeclaration": 6154,
+                              "referencedDeclaration": 6419,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
                             },
@@ -13593,7 +13593,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "getRole",
-                                      "referencedDeclaration": 4119,
+                                      "referencedDeclaration": 4306,
                                       "type": "function (address) view external returns (uint256)"
                                     },
                                     "children": [
@@ -13634,7 +13634,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 6162,
+                                          "referencedDeclaration": 6427,
                                           "type": "tx",
                                           "value": "tx"
                                         },
@@ -13680,7 +13680,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "governmentID",
-                                      "referencedDeclaration": 4064,
+                                      "referencedDeclaration": 4251,
                                       "type": "function () view external returns (uint256)"
                                     },
                                     "children": [
@@ -13827,10 +13827,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                6153,
-                                6154
+                                6418,
+                                6419
                               ],
-                              "referencedDeclaration": 6154,
+                              "referencedDeclaration": 6419,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
                             },
@@ -14012,7 +14012,7 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 6162,
+                                              "referencedDeclaration": 6427,
                                               "type": "tx",
                                               "value": "tx"
                                             },
@@ -14078,7 +14078,7 @@
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "member_name": "getRole",
-                                          "referencedDeclaration": 4119,
+                                          "referencedDeclaration": 4306,
                                           "type": "function (address) view external returns (uint256)"
                                         },
                                         "children": [
@@ -14119,7 +14119,7 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 6162,
+                                              "referencedDeclaration": 6427,
                                               "type": "tx",
                                               "value": "tx"
                                             },
@@ -14165,7 +14165,7 @@
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "member_name": "governmentID",
-                                          "referencedDeclaration": 4064,
+                                          "referencedDeclaration": 4251,
                                           "type": "function () view external returns (uint256)"
                                         },
                                         "children": [
@@ -14515,7 +14515,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 6162,
+                                  "referencedDeclaration": 6427,
                                   "type": "tx",
                                   "value": "tx"
                                 },
@@ -15088,7 +15088,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 6162,
+                                  "referencedDeclaration": 6427,
                                   "type": "tx",
                                   "value": "tx"
                                 },
@@ -15351,10 +15351,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                6153,
-                                6154
+                                6418,
+                                6419
                               ],
-                              "referencedDeclaration": 6153,
+                              "referencedDeclaration": 6418,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -15395,7 +15395,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 6150,
+                                      "referencedDeclaration": 6415,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -19131,10 +19131,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                6153,
-                                6154
+                                6418,
+                                6419
                               ],
-                              "referencedDeclaration": 6153,
+                              "referencedDeclaration": 6418,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -19175,7 +19175,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 6150,
+                                      "referencedDeclaration": 6415,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -19301,7 +19301,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 6150,
+                                          "referencedDeclaration": 6415,
                                           "type": "msg",
                                           "value": "msg"
                                         },
@@ -19542,7 +19542,7 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 6150,
+                                              "referencedDeclaration": 6415,
                                               "type": "msg",
                                               "value": "msg"
                                             },
@@ -22381,10 +22381,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                6153,
-                                6154
+                                6418,
+                                6419
                               ],
-                              "referencedDeclaration": 6153,
+                              "referencedDeclaration": 6418,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -22425,7 +22425,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 6150,
+                                      "referencedDeclaration": 6415,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -22800,10 +22800,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                6153,
-                                6154
+                                6418,
+                                6419
                               ],
-                              "referencedDeclaration": 6153,
+                              "referencedDeclaration": 6418,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -22844,7 +22844,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 6150,
+                                      "referencedDeclaration": 6415,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -23146,7 +23146,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 6150,
+                                  "referencedDeclaration": 6415,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -23227,7 +23227,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 6150,
+                                  "referencedDeclaration": 6415,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -24440,10 +24440,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                6153,
-                                6154
+                                6418,
+                                6419
                               ],
-                              "referencedDeclaration": 6153,
+                              "referencedDeclaration": 6418,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -24484,7 +24484,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 6150,
+                                      "referencedDeclaration": 6415,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -25919,7 +25919,7 @@
                                               "isPure": false,
                                               "lValueRequested": false,
                                               "member_name": "addRole",
-                                              "referencedDeclaration": 4097,
+                                              "referencedDeclaration": 4284,
                                               "type": "function (address,uint256) external"
                                             },
                                             "children": [
@@ -25984,7 +25984,7 @@
                                                   "isPure": false,
                                                   "lValueRequested": false,
                                                   "member_name": "coldStorageRoleID",
-                                                  "referencedDeclaration": 4061,
+                                                  "referencedDeclaration": 4248,
                                                   "type": "function () view external returns (uint256)"
                                                 },
                                                 "children": [
@@ -26075,12 +26075,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xF83891e0a916b107F083f439fA9041cfe58f4aB5",
-      "transactionHash": "0xe651595f423d1716953df29cb8780115adbb457896b6d7a068c637f3b8d55ebe"
+      "address": "0x9979170895B03506EEC60f6d7e2b021EC1fC7B55",
+      "transactionHash": "0x6ed3ce93989b0b5da5b694e550f7f8435c778185be7565416d3a70628332a205"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-01-22T14:31:45.828Z",
+  "updatedAt": "2022-02-05T19:18:44.969Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

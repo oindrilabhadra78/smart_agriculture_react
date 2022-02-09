@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.4.22;
 import "./Roles.sol";
+import "./HelperMethods.sol";
 
 contract DistributorContract {
     Roles public rc;
@@ -28,7 +29,7 @@ contract DistributorContract {
     }
 
     modifier onlyAuthorisedActors(address _address) {
-        require(distributors[_address].isEligible == true || _address == tx.origin || rc.getRole(tx.origin) == rc.governmentID(), "Unauthorised actor");
+        require(distributors[_address].isEligible == true || (HelperMethods.compareStrings(distributors[_address].hash, "") == false && (_address == tx.origin || rc.getRole(tx.origin) == rc.governmentID())), "Unauthorised actor");
         _;
     }
 

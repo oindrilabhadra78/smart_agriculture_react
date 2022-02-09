@@ -3,6 +3,7 @@ pragma solidity ^0.4.22;
 pragma experimental ABIEncoderV2;
 
 import "./Roles.sol";
+import "./HelperMethods.sol";
 
 contract ColdStorageContract {
     Roles public rc;
@@ -34,7 +35,7 @@ contract ColdStorageContract {
     }
 
     modifier onlyAuthorisedActors(address _address) {
-        require(coldStorages[_address].isEligible == true || _address == tx.origin || rc.getRole(tx.origin) == rc.governmentID(), "Unauthorised actor");
+        require(coldStorages[_address].isEligible == true || (HelperMethods.compareStrings(coldStorages[_address].hash, "") == false && (_address == tx.origin || rc.getRole(tx.origin) == rc.governmentID())), "Unauthorised actor");
         _;
     }
 

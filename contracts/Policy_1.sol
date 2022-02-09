@@ -1,33 +1,28 @@
 // SPDX-License-Identifier: GPL-3.0
+
 pragma solidity ^0.4.22;
 import "./FarmerContract.sol";
-import "./Roles.sol";
+import "./StorePolicy.sol";
 
 contract Policy_1 {
-    Roles rc;
     FarmerContract fc;
+    StorePolicy sp;
 
     // ID number of your policy
     uint256 policyID = 31124;
-    uint256 policyTransferAmount = 100;
+    uint256 policyTransferAmount = 4000000000000000000;
+    uint256 timeGap = 2592000;
 
-    constructor(address _fcAddress, address _rcaddress) public {
-        rc = Roles(_rcaddress);
+    mapping(address => uint256) timestamp;
+
+    constructor(address _fcAddress, address _spaddress) public {
         fc = FarmerContract(_fcAddress);
-    }
-
-    modifier onlyGovernmentOfficial() {
-        require(rc.getRole(tx.origin) == rc.governmentID(), "Only government officials can access");
-        _;
-    }
-
-    modifier onlyFarmer() {
-        require(rc.getRole(tx.origin) == rc.farmerRoleID(), "Only farmers can access");
-        _;
+        sp = StorePolicy(_spaddress);
+        sp.insertInList(policyID, address(this));
     }
 
     // Code to check if farmer is eligible for the policy
-    function isEligible(address _farmerAddress) private view returns (bool) {
+    function isEligible(address _farmerAddress) external view returns (bool) {
         string memory _name;
         string memory _stateOfResidence;
         string memory _gender;
@@ -39,32 +34,20 @@ contract Policy_1 {
         (_name, _stateOfResidence, _gender, _landOwned, _latitude, _longitude, isVerified) = fc
         .getFarmer(_farmerAddress);
 
-        if (_landOwned < 10) return true;
+        if (_landOwned < 10) {
+            return true;
+        }
         return false;
     }
 
-    // Description of policy (what should be shown on screen)
-    function description()
-    public
-    view
-    onlyFarmer
-    returns (string memory _description, uint256 _policyID) {
-        if (isEligible(tx.origin) == true) {
-            return ("You are eligible for Kisan yojana scheme, you have land less than 10", policyID);
-        } else {
-            return ("You are not eligible for Kisan yojana scheme, you have land more than or equal to 10", policyID);
-        }
-    }
-
-    // Fund (To fund the smart contract)
-    function fund() public payable onlyGovernmentOfficial {
-
-    }
-
-    // Execution (Transfer of money etc)
-    function action(address recipient) public payable onlyGovernmentOfficial {
-        if (isEligible(recipient) == true) {
+    // Execution (Transfer of money)
+    function action(address recipient, uint256 current) external payable {
+        if (current-timestamp[recipient]>=timeGap) {
             recipient.transfer(policyTransferAmount);
+            tx.origin.transfer(msg.value - policyTransferAmount);
+            timestamp[recipient] = current;
+        } else {
+            tx.origin.transfer(msg.value);
         }
     }
 }

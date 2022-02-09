@@ -8,6 +8,8 @@ var GovernmentContract = artifacts.require("./GovernmentContract.sol");
 var SupplyChain = artifacts.require("./SupplyChain.sol");
 var SupplyChain2 = artifacts.require("./SupplyChain2.sol");
 var DistanceOptimizer = artifacts.require("./DistanceOptimizer.sol");
+var StorePolicy = artifacts.require("./StorePolicy.sol");
+var PolicyContract = artifacts.require("./PolicyContract.sol");
 
 module.exports = async function (deployer) {
   await deployer.deploy(Roles);
@@ -45,5 +47,13 @@ module.exports = async function (deployer) {
     DistributorContract.address,
     RetailerContract.address,
     ColdStorageContract.address
+    );
+
+  await deployer.deploy(StorePolicy);
+
+  await deployer.deploy(
+    PolicyContract,
+    StorePolicy.address,
+    Roles.address
     );
 };

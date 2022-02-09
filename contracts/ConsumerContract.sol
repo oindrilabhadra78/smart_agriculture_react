@@ -35,6 +35,7 @@ contract ConsumerContract {
         view
         returns (string memory _name, string memory _contact)
     {
+        require(rc.getRole(_address) == rc.consumerRoleID(), "Not consumer");
         return (consumers[_address].name, consumers[_address].contact);
     }
 

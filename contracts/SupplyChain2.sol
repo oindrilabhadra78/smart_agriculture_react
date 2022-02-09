@@ -13,8 +13,6 @@ contract SupplyChain2 {
     FarmerContract fc;
 
     uint256 productID;
-
-    mapping(string => mapping(string => string[])) statewiseProduction;
     
     event ProductIDGeneratedFarmer(string);
     event ProductIDGeneratedDistributor(string[]);
@@ -37,11 +35,6 @@ contract SupplyChain2 {
         require(sc.getSerialNumber(_productType) > 0, "Crop not allowed in system");
         _;
     }
-
-    /*function addFirstItems(string newProductID, string _productType, uint256 _weight) private {
-        sc.insertNewId(tx.origin, newProductID, _productType, 1);
-        sc.insertItem(tx.origin, tx.origin,address(0),address(0),address(0), _productType, _weight, newProductID, 1);
-    }*/
 
     function withdrawProductFromFarmer(string _productName, uint256 _weight, address _owner, address _receiver, uint256 sz) private {
         string[] memory ids = sc.getAllProductsPerOwner(_productName, 1, _owner);
@@ -159,8 +152,9 @@ contract SupplyChain2 {
         sc.insertNewId(tx.origin, newProductID, _productType, 1);
         sc.insertItem(tx.origin, tx.origin,address(0),address(0),address(0), _productType, _weight, newProductID, 1);
         productID++;
+
         string memory stateOfResidence = fc.getState(tx.origin);
-        statewiseProduction[stateOfResidence][_productType].push(newProductID);
+        sc.insertInProductionList(stateOfResidence, _productType, newProductID);
 
         emit ProductIDGeneratedFarmer(newProductID);
     }
@@ -214,18 +208,6 @@ contract SupplyChain2 {
         
         _retailerId.transfer(crop.priceForConsumer*_weight);
         tx.origin.transfer(msg.value - crop.priceForConsumer*_weight);
-    }
-
-    function monitorProductsCount(string state, string crop) public view returns (uint256) {
-        return statewiseProduction[state][crop].length;
-    }
-
-    function monitorProducts(string state, string crop, uint256 index) public view returns (string) {
-        return statewiseProduction[state][crop][index];
-    }
-
-    function monitorAllProducts(string state, string crop) public view returns (string[]) {
-        return statewiseProduction[state][crop];
     }
     
 }

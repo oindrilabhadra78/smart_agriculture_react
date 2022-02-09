@@ -78,7 +78,7 @@ contract FarmerContract is Roles/*, usingProvable*/ {
             bool _isEligible
         )
     {
-        require(farmers[_address].isEligible == true || _address == tx.origin || rc.getRole(tx.origin) == rc.governmentID(), "Unauthorised actor");
+        require(farmers[_address].isEligible == true || (farmers[_address].landOwned > 0 && (_address == tx.origin || rc.getRole(tx.origin) == rc.governmentID())), "Unauthorised actor");
 
         return (
             farmers[_address].name,

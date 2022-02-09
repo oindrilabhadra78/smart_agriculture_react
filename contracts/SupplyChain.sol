@@ -40,6 +40,7 @@ contract SupplyChain {
     mapping (string => Item) items;
     mapping (string => Crop) cropPrices;
 
+    mapping(string => mapping(string => string[])) statewiseProduction;
     mapping (uint256=>OwnerProduct) productAvailability;
 
     modifier verifyReceiver(address _address, uint256 roleID) {
@@ -156,6 +157,22 @@ contract SupplyChain {
     function updateCurrentItem(string id, uint256 wt) external {
         items[id].weight -= wt;
         items[id].parts++;
+    }
+
+    function insertInProductionList(string stateOfResidence, string _productType, string newProductID) external {
+        statewiseProduction[stateOfResidence][_productType].push(newProductID);
+    }
+
+    function monitorProductsCount(string state, string crop) public view returns (uint256) {
+        return statewiseProduction[state][crop].length;
+    }
+
+    function monitorProducts(string state, string crop, uint256 index) public view returns (string) {
+        return statewiseProduction[state][crop][index];
+    }
+
+    function monitorAllProducts(string state, string crop) public view returns (string[]) {
+        return statewiseProduction[state][crop];
     }
 
     function checkAvailability(string _productName, uint256 _weight, address _owner, uint256 stage) external view returns(uint256) {

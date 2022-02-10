@@ -30,11 +30,11 @@ export const FarmerProfile = () => {
             const instance = new web3.eth.Contract(
                 Roles.abi,
                 deployedNetwork && deployedNetwork.address
-                );
+            );
 
             var _roleId = await instance.methods
-            .getRole(account)
-            .call();
+                .getRole(account)
+                .call();
 
             setRoleId(_roleId);
         } catch (error) {
@@ -49,7 +49,7 @@ export const FarmerProfile = () => {
         const instance = new web3.eth.Contract(
             FarmerContract.abi,
             deployedNetwork && deployedNetwork.address
-            );
+        );
 
         let obj = await instance.methods.getFarmer(account).call();
 
@@ -104,17 +104,22 @@ export const FarmerProfile = () => {
                 Find Nearest Cold Storage
                 </button>
                 </Link>
+                <Link to="/AllPolicy" style={{ textDecoration: 'none' }}>
+                <button className="btn-grad" style={{ border: 'none', outline: 'none', margin: "auto", marginTop: "50px" }}>
+                View All Policies
+                </button>
+                </Link>
                 </div>
 
                 </div>
-                );
+            );
         } else {
             return (
                 <div>
                 <h2>Not authenticated</h2>
                 <a href="/">Home</a>
                 </div>
-                );
+            );
         }
     }
 };

@@ -18,7 +18,11 @@ import { NearestSeller } from "./components/NearestSeller";
 import { GetDetails } from "./components/GetDetails";
 import { GetAll } from "./components/GetAll";
 import { CropOwners } from "./components/CropOwners";
+import { AllPolicy } from "./components/AllPolicy";
+import { PolicyEligibility } from "./components/PolicyEligibility";
 import { CropIds } from "./components/CropIds";
+import { GrantPolicy } from "./components/GrantPolicy";
+import { ViewStatewiseProduction } from "./components/ViewStatewiseProduction";
 
 import { Switch, Router, Route } from "react-router";
 
@@ -85,10 +89,14 @@ function App() {
             <Route path="/UnverifiedActors" component={UnverifiedActors} />
             <Route path="/HarvestItem" component={HarvestItem} />
             <Route path="/SetPrice" component={SetPrice} />
+            <Route path="/ViewStatewiseProduction" component={ViewStatewiseProduction} />
             <Route path="/BuyItem" component={BuyItem} />
             <Route path="/CropOwners" component={CropOwners} />
             <Route path="/NearestSeller" component={NearestSeller} />
-            <Route path="/CropIds/:crop/:stage/:owner" render={(props) => <CropIds {...props} />}/>
+            <Route path="/AllPolicy" component={AllPolicy} />
+            <Route path="/GrantPolicy" component={GrantPolicy} />
+            <Route path="/PolicyEligibility/" render={(props) => <PolicyEligibility {...props} /> } />
+            <Route path="/CropIds/:crop/:stage/:owner" render={(props) => <CropIds {...props} />} />
             <Route path="/GetDetails/:role/:id" render={(props) => <GetDetails {...props} />} />
             <Route path="/GetAll/:role" render={(props) => <GetAll {...props} />} />
             {auth ? (
@@ -105,3 +113,4 @@ function App() {
 }
 
 export default App;
+

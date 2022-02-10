@@ -89,18 +89,31 @@ export const OfficialProfile = () => {
                 <h2>Government Official</h2>
                 <p>Name: {data._name} </p>           
                 <p>Employee Id: {data._govId}</p>
-
                 </div>
+
                 <div>
+
                 <Link to="/UnverifiedActors" style={{ textDecoration: 'none' }}>
                 <button className="btn-grad" style={{ border: 'none', outline: 'none', margin: "auto", marginTop: "50px" }}>
                 View Unverified Actors
                 </button>
                 </Link>
 
+                <Link to="/ViewStatewiseProduction" style={{ textDecoration: 'none' }}>
+                <button className="btn-grad" style={{ border: 'none', outline: 'none', margin: "auto", marginTop: "50px" }}>
+                View Statewise Production
+                </button>
+                </Link>
+
                 <Link to="/SetPrice" style={{ textDecoration: 'none' }}>
                 <button className="btn-grad" style={{ border: 'none', outline: 'none', margin: "auto", marginTop: "50px" }}>
                 Set Price of Crops
+                </button>
+                </Link>
+
+                <Link to="/GrantPolicy" style={{ textDecoration: 'none' }}>
+                <button className="btn-grad" style={{ border: 'none', outline: 'none', margin: "auto", marginTop: "50px" }}>
+                Grant Policy to Farmers
                 </button>
                 </Link>
 

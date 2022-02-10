@@ -44,7 +44,7 @@
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "// SPDX-License-Identifier: GPL-3.0\r\n\r\npragma solidity ^0.4.22;\r\nimport \"./StorePolicy.sol\";\r\nimport \"./Roles.sol\";\r\n\r\ninterface Policy {\r\n    function isEligible(address) external view returns (bool);\r\n    function action(address, uint256) external payable;\r\n}\r\n\r\ncontract PolicyContract {\r\n    Roles rc;\r\n    StorePolicy p; \r\n    constructor(address _spaddress, address _rcaddress) public {\r\n        p = StorePolicy(_spaddress);\r\n        rc = Roles(_rcaddress);\r\n    }\r\n\r\n    modifier onlyGovernmentOfficial() {\r\n        require(rc.getRole(tx.origin) == rc.governmentID(), \"Only government officials can access\");\r\n        _;\r\n    }\r\n\r\n    modifier onlyFarmer() {\r\n        require(rc.getRole(tx.origin) == rc.farmerRoleID(), \"Only farmers can access\");\r\n        _;\r\n    }\r\n\r\n    function checkEligibility(uint256 id) public view onlyFarmer returns(bool) {\r\n        address _address = p.contains(id);\r\n        if (_address != address(0)) {\r\n            return Policy(_address).isEligible(tx.origin);\r\n        } else {\r\n            return false;\r\n        }\r\n    }\r\n\r\n    function transferFunds(uint256 id, address _farmerAddress, uint256 currentTime) public payable onlyGovernmentOfficial {\r\n        address _address = p.contains(id);\r\n        if (_address != address(0) && Policy(_address).isEligible(_farmerAddress) == true) {\r\n            Policy(_address).action.value(msg.value)(_farmerAddress, currentTime);\r\n        } else {\r\n            tx.origin.transfer(msg.value);\r\n        }\r\n    }  \r\n}",
+  "source": "// SPDX-License-Identifier: GPL-3.0\r\n\r\npragma solidity ^0.4.22;\r\nimport \"./StorePolicy.sol\";\r\nimport \"./Roles.sol\";\r\n\r\ninterface Policy {\r\n    function isEligible(address) external view returns (bool);\r\n    function action(address, uint256) external payable;\r\n}\r\n\r\ncontract PolicyContract {\r\n    Roles rc;\r\n    StorePolicy p; \r\n    constructor(address _spaddress, address _rcaddress) public {\r\n        p = StorePolicy(_spaddress);\r\n        rc = Roles(_rcaddress);\r\n    }\r\n\r\n    modifier onlyGovernmentOfficial() {\r\n        require(rc.getRole(tx.origin) == rc.governmentID(), \"Only government officials can access\");\r\n        _;\r\n    }\r\n\r\n    modifier onlyFarmer() {\r\n        require(rc.getRole(tx.origin) == rc.farmerRoleID(), \"Only farmers can access\");\r\n        _;\r\n    }\r\n\r\n    function checkEligibility(uint256 id) public view onlyFarmer returns(bool) {\r\n        address _address = p.contains(id);\r\n        if (_address != address(0)) {\r\n            return Policy(_address).isEligible(tx.origin);\r\n        } else {\r\n            return false;\r\n        }\r\n    }\r\n\r\n    function transferFunds(uint256 id, address _farmerAddress, uint256 currentTime) public payable onlyGovernmentOfficial {\r\n        address _address = p.contains(id);\r\n        if (_address != address(0) && Policy(_address).isEligible(_farmerAddress) == true) {\r\n            Policy(_address).action.value(msg.value)(_farmerAddress, currentTime);\r\n        } else {\r\n            tx.origin.transfer(msg.value);\r\n        }\r\n    }  \r\n\r\n    function viewNumPolicy() public view returns(uint256) {\r\n        return p.numPolicies();\r\n    }\r\n\r\n    function viewPolicyDetails(uint256 index) public view returns(uint256, string) {\r\n        return p.viewPolicy(index);\r\n    }\r\n}",
   "sourcePath": "D:\\7thSemester\\CS491\\smart_agriculture_react\\contracts\\PolicyContract.sol",
   "ast": {
     "absolutePath": "project:/contracts/PolicyContract.sol",
@@ -53,10 +53,10 @@
         3764
       ],
       "PolicyContract": [
-        3915
+        3940
       ]
     },
-    "id": 3916,
+    "id": 3941,
     "nodeType": "SourceUnit",
     "nodes": [
       {
@@ -75,8 +75,8 @@
         "file": "./StorePolicy.sol",
         "id": 3748,
         "nodeType": "ImportDirective",
-        "scope": 3916,
-        "sourceUnit": 4573,
+        "scope": 3941,
+        "sourceUnit": 4652,
         "src": "65:27:8",
         "symbolAliases": [],
         "unitAlias": ""
@@ -86,8 +86,8 @@
         "file": "./Roles.sol",
         "id": 3749,
         "nodeType": "ImportDirective",
-        "scope": 3916,
-        "sourceUnit": 4540,
+        "scope": 3941,
+        "sourceUnit": 4569,
         "src": "94:21:8",
         "symbolAliases": [],
         "unitAlias": ""
@@ -271,7 +271,7 @@
             "visibility": "external"
           }
         ],
-        "scope": 3916,
+        "scope": 3941,
         "src": "119:142:8"
       },
       {
@@ -280,9 +280,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 3915,
+        "id": 3940,
         "linearizedBaseContracts": [
-          3915
+          3940
         ],
         "name": "PolicyContract",
         "nodeType": "ContractDefinition",
@@ -292,12 +292,12 @@
             "id": 3766,
             "name": "rc",
             "nodeType": "VariableDeclaration",
-            "scope": 3915,
+            "scope": 3940,
             "src": "296:8:8",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_Roles_$4539",
+              "typeIdentifier": "t_contract$_Roles_$4568",
               "typeString": "contract Roles"
             },
             "typeName": {
@@ -305,10 +305,10 @@
               "id": 3765,
               "name": "Roles",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 4539,
+              "referencedDeclaration": 4568,
               "src": "296:5:8",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Roles_$4539",
+                "typeIdentifier": "t_contract$_Roles_$4568",
                 "typeString": "contract Roles"
               }
             },
@@ -320,12 +320,12 @@
             "id": 3768,
             "name": "p",
             "nodeType": "VariableDeclaration",
-            "scope": 3915,
+            "scope": 3940,
             "src": "311:13:8",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_StorePolicy_$4572",
+              "typeIdentifier": "t_contract$_StorePolicy_$4651",
               "typeString": "contract StorePolicy"
             },
             "typeName": {
@@ -333,10 +333,10 @@
               "id": 3767,
               "name": "StorePolicy",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 4572,
+              "referencedDeclaration": 4651,
               "src": "311:11:8",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_StorePolicy_$4572",
+                "typeIdentifier": "t_contract$_StorePolicy_$4651",
                 "typeString": "contract StorePolicy"
               }
             },
@@ -366,7 +366,7 @@
                       "referencedDeclaration": 3768,
                       "src": "402:1:8",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_StorePolicy_$4572",
+                        "typeIdentifier": "t_contract$_StorePolicy_$4651",
                         "typeString": "contract StorePolicy"
                       }
                     },
@@ -400,10 +400,10 @@
                         "name": "StorePolicy",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4572,
+                        "referencedDeclaration": 4651,
                         "src": "406:11:8",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_StorePolicy_$4572_$",
+                          "typeIdentifier": "t_type$_t_contract$_StorePolicy_$4651_$",
                           "typeString": "type(contract StorePolicy)"
                         }
                       },
@@ -417,13 +417,13 @@
                       "nodeType": "FunctionCall",
                       "src": "406:23:8",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_StorePolicy_$4572",
+                        "typeIdentifier": "t_contract$_StorePolicy_$4651",
                         "typeString": "contract StorePolicy"
                       }
                     },
                     "src": "402:27:8",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_StorePolicy_$4572",
+                      "typeIdentifier": "t_contract$_StorePolicy_$4651",
                       "typeString": "contract StorePolicy"
                     }
                   },
@@ -448,7 +448,7 @@
                       "referencedDeclaration": 3766,
                       "src": "440:2:8",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_Roles_$4539",
+                        "typeIdentifier": "t_contract$_Roles_$4568",
                         "typeString": "contract Roles"
                       }
                     },
@@ -482,10 +482,10 @@
                         "name": "Roles",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4539,
+                        "referencedDeclaration": 4568,
                         "src": "445:5:8",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_Roles_$4539_$",
+                          "typeIdentifier": "t_type$_t_contract$_Roles_$4568_$",
                           "typeString": "type(contract Roles)"
                         }
                       },
@@ -499,13 +499,13 @@
                       "nodeType": "FunctionCall",
                       "src": "445:17:8",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_Roles_$4539",
+                        "typeIdentifier": "t_contract$_Roles_$4568",
                         "typeString": "contract Roles"
                       }
                     },
                     "src": "440:22:8",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_Roles_$4539",
+                      "typeIdentifier": "t_contract$_Roles_$4568",
                       "typeString": "contract Roles"
                     }
                   },
@@ -589,7 +589,7 @@
               "parameters": [],
               "src": "391:0:8"
             },
-            "scope": 3915,
+            "scope": 3940,
             "src": "332:138:8",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -627,7 +627,7 @@
                                 "name": "tx",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 6690,
+                                "referencedDeclaration": 6769,
                                 "src": "542:2:8",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_magic_transaction",
@@ -665,7 +665,7 @@
                               "referencedDeclaration": 3766,
                               "src": "531:2:8",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_contract$_Roles_$4539",
+                                "typeIdentifier": "t_contract$_Roles_$4568",
                                 "typeString": "contract Roles"
                               }
                             },
@@ -676,7 +676,7 @@
                             "lValueRequested": false,
                             "memberName": "getRole",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 4518,
+                            "referencedDeclaration": 4547,
                             "src": "531:10:8",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_external_view$_t_address_$returns$_t_uint256_$",
@@ -713,7 +713,7 @@
                               "referencedDeclaration": 3766,
                               "src": "556:2:8",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_contract$_Roles_$4539",
+                                "typeIdentifier": "t_contract$_Roles_$4568",
                                 "typeString": "contract Roles"
                               }
                             },
@@ -724,7 +724,7 @@
                             "lValueRequested": false,
                             "memberName": "governmentID",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 4463,
+                            "referencedDeclaration": 4492,
                             "src": "556:15:8",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_external_view$__$returns$_t_uint256_$",
@@ -785,10 +785,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        6681,
-                        6682
+                        6760,
+                        6761
                       ],
-                      "referencedDeclaration": 6682,
+                      "referencedDeclaration": 6761,
                       "src": "523:7:8",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -865,7 +865,7 @@
                                 "name": "tx",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 6690,
+                                "referencedDeclaration": 6769,
                                 "src": "694:2:8",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_magic_transaction",
@@ -903,7 +903,7 @@
                               "referencedDeclaration": 3766,
                               "src": "683:2:8",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_contract$_Roles_$4539",
+                                "typeIdentifier": "t_contract$_Roles_$4568",
                                 "typeString": "contract Roles"
                               }
                             },
@@ -914,7 +914,7 @@
                             "lValueRequested": false,
                             "memberName": "getRole",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 4518,
+                            "referencedDeclaration": 4547,
                             "src": "683:10:8",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_external_view$_t_address_$returns$_t_uint256_$",
@@ -951,7 +951,7 @@
                               "referencedDeclaration": 3766,
                               "src": "708:2:8",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_contract$_Roles_$4539",
+                                "typeIdentifier": "t_contract$_Roles_$4568",
                                 "typeString": "contract Roles"
                               }
                             },
@@ -962,7 +962,7 @@
                             "lValueRequested": false,
                             "memberName": "farmerRoleID",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 4448,
+                            "referencedDeclaration": 4477,
                             "src": "708:15:8",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_external_view$__$returns$_t_uint256_$",
@@ -1023,10 +1023,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        6681,
-                        6682
+                        6760,
+                        6761
                       ],
-                      "referencedDeclaration": 6682,
+                      "referencedDeclaration": 6761,
                       "src": "675:7:8",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -1143,7 +1143,7 @@
                         "referencedDeclaration": 3768,
                         "src": "886:1:8",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_StorePolicy_$4572",
+                          "typeIdentifier": "t_contract$_StorePolicy_$4651",
                           "typeString": "contract StorePolicy"
                         }
                       },
@@ -1154,7 +1154,7 @@
                       "lValueRequested": false,
                       "memberName": "contains",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 4571,
+                      "referencedDeclaration": 4621,
                       "src": "886:10:8",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_view$_t_uint256_$returns$_t_address_$",
@@ -1318,7 +1318,7 @@
                                 "name": "tx",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 6690,
+                                "referencedDeclaration": 6769,
                                 "src": "989:2:8",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_magic_transaction",
@@ -1529,7 +1529,7 @@
               ],
               "src": "849:6:8"
             },
-            "scope": 3915,
+            "scope": 3940,
             "src": "781:282:8",
             "stateMutability": "view",
             "superFunction": null,
@@ -1607,7 +1607,7 @@
                         "referencedDeclaration": 3768,
                         "src": "1219:1:8",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_StorePolicy_$4572",
+                          "typeIdentifier": "t_contract$_StorePolicy_$4651",
                           "typeString": "contract StorePolicy"
                         }
                       },
@@ -1618,7 +1618,7 @@
                       "lValueRequested": false,
                       "memberName": "contains",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 4571,
+                      "referencedDeclaration": 4621,
                       "src": "1219:10:8",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_view$_t_uint256_$returns$_t_address_$",
@@ -1905,7 +1905,7 @@
                                 "name": "msg",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 6678,
+                                "referencedDeclaration": 6757,
                                 "src": "1463:3:8",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_magic_message",
@@ -1942,7 +1942,7 @@
                                 "name": "tx",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 6690,
+                                "referencedDeclaration": 6769,
                                 "src": "1444:2:8",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_magic_transaction",
@@ -2056,7 +2056,7 @@
                                   "name": "msg",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 6678,
+                                  "referencedDeclaration": 6757,
                                   "src": "1372:3:8",
                                   "typeDescriptions": {
                                     "typeIdentifier": "t_magic_message",
@@ -2321,18 +2321,318 @@
               "parameters": [],
               "src": "1189:0:8"
             },
-            "scope": 3915,
+            "scope": 3940,
             "src": "1071:421:8",
             "stateMutability": "payable",
             "superFunction": null,
             "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 3923,
+              "nodeType": "Block",
+              "src": "1556:41:8",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 3919,
+                        "name": "p",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3768,
+                        "src": "1574:1:8",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_StorePolicy_$4651",
+                          "typeString": "contract StorePolicy"
+                        }
+                      },
+                      "id": 3920,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "numPolicies",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 4630,
+                      "src": "1574:13:8",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_external_view$__$returns$_t_uint256_$",
+                        "typeString": "function () view external returns (uint256)"
+                      }
+                    },
+                    "id": 3921,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1574:15:8",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "functionReturnParameters": 3918,
+                  "id": 3922,
+                  "nodeType": "Return",
+                  "src": "1567:22:8"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 3924,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "viewNumPolicy",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3915,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1524:2:8"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3918,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3917,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3924,
+                  "src": "1547:7:8",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3916,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1547:7:8",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1546:9:8"
+            },
+            "scope": 3940,
+            "src": "1502:95:8",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 3938,
+              "nodeType": "Block",
+              "src": "1684:45:8",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 3935,
+                        "name": "index",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3926,
+                        "src": "1715:5:8",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 3933,
+                        "name": "p",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3768,
+                        "src": "1702:1:8",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_StorePolicy_$4651",
+                          "typeString": "contract StorePolicy"
+                        }
+                      },
+                      "id": 3934,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "viewPolicy",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 4650,
+                      "src": "1702:12:8",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_external_view$_t_uint256_$returns$_t_uint256_$_t_string_memory_ptr_$",
+                        "typeString": "function (uint256) view external returns (uint256,string memory)"
+                      }
+                    },
+                    "id": 3936,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1702:19:8",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$_t_uint256_$_t_string_memory_ptr_$",
+                      "typeString": "tuple(uint256,string memory)"
+                    }
+                  },
+                  "functionReturnParameters": 3932,
+                  "id": 3937,
+                  "nodeType": "Return",
+                  "src": "1695:26:8"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 3939,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "viewPolicyDetails",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3927,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3926,
+                  "name": "index",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3939,
+                  "src": "1632:13:8",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3925,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1632:7:8",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1631:15:8"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3932,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3929,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3939,
+                  "src": "1667:7:8",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3928,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1667:7:8",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3931,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3939,
+                  "src": "1676:6:8",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 3930,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1676:6:8",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1666:17:8"
+            },
+            "scope": 3940,
+            "src": "1605:124:8",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
           }
         ],
-        "scope": 3916,
-        "src": "265:1232:8"
+        "scope": 3941,
+        "src": "265:1467:8"
       }
     ],
-    "src": "39:1458:8"
+    "src": "39:1693:8"
   },
   "legacyAST": {
     "attributes": {
@@ -2342,7 +2642,7 @@
           3764
         ],
         "PolicyContract": [
-          3915
+          3940
         ]
       }
     },
@@ -2362,10 +2662,10 @@
       },
       {
         "attributes": {
-          "SourceUnit": 4573,
+          "SourceUnit": 4652,
           "absolutePath": "project:/contracts/StorePolicy.sol",
           "file": "./StorePolicy.sol",
-          "scope": 3916,
+          "scope": 3941,
           "symbolAliases": [
             null
           ],
@@ -2377,10 +2677,10 @@
       },
       {
         "attributes": {
-          "SourceUnit": 4540,
+          "SourceUnit": 4569,
           "absolutePath": "project:/contracts/Roles.sol",
           "file": "./Roles.sol",
-          "scope": 3916,
+          "scope": 3941,
           "symbolAliases": [
             null
           ],
@@ -2405,7 +2705,7 @@
             3764
           ],
           "name": "Policy",
-          "scope": 3916
+          "scope": 3941
         },
         "children": [
           {
@@ -2607,17 +2907,17 @@
           "documentation": null,
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            3915
+            3940
           ],
           "name": "PolicyContract",
-          "scope": 3916
+          "scope": 3941
         },
         "children": [
           {
             "attributes": {
               "constant": false,
               "name": "rc",
-              "scope": 3915,
+              "scope": 3940,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "contract Roles",
@@ -2629,7 +2929,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "Roles",
-                  "referencedDeclaration": 4539,
+                  "referencedDeclaration": 4568,
                   "type": "contract Roles"
                 },
                 "id": 3765,
@@ -2645,7 +2945,7 @@
             "attributes": {
               "constant": false,
               "name": "p",
-              "scope": 3915,
+              "scope": 3940,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "contract StorePolicy",
@@ -2657,7 +2957,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "StorePolicy",
-                  "referencedDeclaration": 4572,
+                  "referencedDeclaration": 4651,
                   "type": "contract StorePolicy"
                 },
                 "id": 3767,
@@ -2680,7 +2980,7 @@
               ],
               "name": "",
               "payable": false,
-              "scope": 3915,
+              "scope": 3940,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -2811,7 +3111,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 4572,
+                                  "referencedDeclaration": 4651,
                                   "type": "type(contract StorePolicy)",
                                   "value": "StorePolicy"
                                 },
@@ -2901,7 +3201,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 4539,
+                                  "referencedDeclaration": 4568,
                                   "type": "type(contract Roles)",
                                   "value": "Roles"
                                 },
@@ -2998,10 +3298,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                6681,
-                                6682
+                                6760,
+                                6761
                               ],
-                              "referencedDeclaration": 6682,
+                              "referencedDeclaration": 6761,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
                             },
@@ -3052,7 +3352,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "getRole",
-                                      "referencedDeclaration": 4518,
+                                      "referencedDeclaration": 4547,
                                       "type": "function (address) view external returns (uint256)"
                                     },
                                     "children": [
@@ -3093,7 +3393,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 6690,
+                                          "referencedDeclaration": 6769,
                                           "type": "tx",
                                           "value": "tx"
                                         },
@@ -3139,7 +3439,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "governmentID",
-                                      "referencedDeclaration": 4463,
+                                      "referencedDeclaration": 4492,
                                       "type": "function () view external returns (uint256)"
                                     },
                                     "children": [
@@ -3264,10 +3564,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                6681,
-                                6682
+                                6760,
+                                6761
                               ],
-                              "referencedDeclaration": 6682,
+                              "referencedDeclaration": 6761,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
                             },
@@ -3318,7 +3618,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "getRole",
-                                      "referencedDeclaration": 4518,
+                                      "referencedDeclaration": 4547,
                                       "type": "function (address) view external returns (uint256)"
                                     },
                                     "children": [
@@ -3359,7 +3659,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 6690,
+                                          "referencedDeclaration": 6769,
                                           "type": "tx",
                                           "value": "tx"
                                         },
@@ -3405,7 +3705,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "farmerRoleID",
-                                      "referencedDeclaration": 4448,
+                                      "referencedDeclaration": 4477,
                                       "type": "function () view external returns (uint256)"
                                     },
                                     "children": [
@@ -3488,7 +3788,7 @@
               "isConstructor": false,
               "name": "checkEligibility",
               "payable": false,
-              "scope": 3915,
+              "scope": 3940,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -3647,7 +3947,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "contains",
-                              "referencedDeclaration": 4571,
+                              "referencedDeclaration": 4621,
                               "type": "function (uint256) view external returns (address)"
                             },
                             "children": [
@@ -3901,7 +4201,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 6690,
+                                          "referencedDeclaration": 6769,
                                           "type": "tx",
                                           "value": "tx"
                                         },
@@ -3986,7 +4286,7 @@
               "isConstructor": false,
               "name": "transferFunds",
               "payable": true,
-              "scope": 3915,
+              "scope": 3940,
               "stateMutability": "payable",
               "superFunction": null,
               "visibility": "public"
@@ -4175,7 +4475,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "contains",
-                              "referencedDeclaration": 4571,
+                              "referencedDeclaration": 4621,
                               "type": "function (uint256) view external returns (address)"
                             },
                             "children": [
@@ -4633,7 +4933,7 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 6678,
+                                              "referencedDeclaration": 6757,
                                               "type": "msg",
                                               "value": "msg"
                                             },
@@ -4748,7 +5048,7 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 6690,
+                                              "referencedDeclaration": 6769,
                                               "type": "tx",
                                               "value": "tx"
                                             },
@@ -4784,7 +5084,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 6678,
+                                          "referencedDeclaration": 6757,
                                           "type": "msg",
                                           "value": "msg"
                                         },
@@ -4826,16 +5126,356 @@
             "id": 3914,
             "name": "FunctionDefinition",
             "src": "1071:421:8"
+          },
+          {
+            "attributes": {
+              "constant": true,
+              "documentation": null,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "viewNumPolicy",
+              "payable": false,
+              "scope": 3940,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 3915,
+                "name": "ParameterList",
+                "src": "1524:2:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 3924,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 3916,
+                        "name": "ElementaryTypeName",
+                        "src": "1547:7:8"
+                      }
+                    ],
+                    "id": 3917,
+                    "name": "VariableDeclaration",
+                    "src": "1547:7:8"
+                  }
+                ],
+                "id": 3918,
+                "name": "ParameterList",
+                "src": "1546:9:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 3918
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            null
+                          ],
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "uint256",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                null
+                              ],
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "numPolicies",
+                              "referencedDeclaration": 4630,
+                              "type": "function () view external returns (uint256)"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 3768,
+                                  "type": "contract StorePolicy",
+                                  "value": "p"
+                                },
+                                "id": 3919,
+                                "name": "Identifier",
+                                "src": "1574:1:8"
+                              }
+                            ],
+                            "id": 3920,
+                            "name": "MemberAccess",
+                            "src": "1574:13:8"
+                          }
+                        ],
+                        "id": 3921,
+                        "name": "FunctionCall",
+                        "src": "1574:15:8"
+                      }
+                    ],
+                    "id": 3922,
+                    "name": "Return",
+                    "src": "1567:22:8"
+                  }
+                ],
+                "id": 3923,
+                "name": "Block",
+                "src": "1556:41:8"
+              }
+            ],
+            "id": 3924,
+            "name": "FunctionDefinition",
+            "src": "1502:95:8"
+          },
+          {
+            "attributes": {
+              "constant": true,
+              "documentation": null,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "viewPolicyDetails",
+              "payable": false,
+              "scope": 3940,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "index",
+                      "scope": 3939,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 3925,
+                        "name": "ElementaryTypeName",
+                        "src": "1632:7:8"
+                      }
+                    ],
+                    "id": 3926,
+                    "name": "VariableDeclaration",
+                    "src": "1632:13:8"
+                  }
+                ],
+                "id": 3927,
+                "name": "ParameterList",
+                "src": "1631:15:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 3939,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 3928,
+                        "name": "ElementaryTypeName",
+                        "src": "1667:7:8"
+                      }
+                    ],
+                    "id": 3929,
+                    "name": "VariableDeclaration",
+                    "src": "1667:7:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 3939,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "string",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "string",
+                          "type": "string"
+                        },
+                        "id": 3930,
+                        "name": "ElementaryTypeName",
+                        "src": "1676:6:8"
+                      }
+                    ],
+                    "id": 3931,
+                    "name": "VariableDeclaration",
+                    "src": "1676:6:8"
+                  }
+                ],
+                "id": 3932,
+                "name": "ParameterList",
+                "src": "1666:17:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 3932
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple(uint256,string memory)",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              ],
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "viewPolicy",
+                              "referencedDeclaration": 4650,
+                              "type": "function (uint256) view external returns (uint256,string memory)"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 3768,
+                                  "type": "contract StorePolicy",
+                                  "value": "p"
+                                },
+                                "id": 3933,
+                                "name": "Identifier",
+                                "src": "1702:1:8"
+                              }
+                            ],
+                            "id": 3934,
+                            "name": "MemberAccess",
+                            "src": "1702:12:8"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 3926,
+                              "type": "uint256",
+                              "value": "index"
+                            },
+                            "id": 3935,
+                            "name": "Identifier",
+                            "src": "1715:5:8"
+                          }
+                        ],
+                        "id": 3936,
+                        "name": "FunctionCall",
+                        "src": "1702:19:8"
+                      }
+                    ],
+                    "id": 3937,
+                    "name": "Return",
+                    "src": "1695:26:8"
+                  }
+                ],
+                "id": 3938,
+                "name": "Block",
+                "src": "1684:45:8"
+              }
+            ],
+            "id": 3939,
+            "name": "FunctionDefinition",
+            "src": "1605:124:8"
           }
         ],
-        "id": 3915,
+        "id": 3940,
         "name": "ContractDefinition",
-        "src": "265:1232:8"
+        "src": "265:1467:8"
       }
     ],
-    "id": 3916,
+    "id": 3941,
     "name": "SourceUnit",
-    "src": "39:1458:8"
+    "src": "39:1693:8"
   },
   "compiler": {
     "name": "solc",
@@ -4843,7 +5483,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-02-09T06:48:25.790Z",
+  "updatedAt": "2022-02-09T11:47:02.840Z",
   "devdoc": {
     "methods": {}
   },

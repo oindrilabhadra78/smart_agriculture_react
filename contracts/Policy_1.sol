@@ -12,13 +12,14 @@ contract Policy_1 {
     uint256 policyID = 31124;
     uint256 policyTransferAmount = 4000000000000000000;
     uint256 timeGap = 2592000;
+    string policyName = "Policy1";
 
     mapping(address => uint256) timestamp;
 
     constructor(address _fcAddress, address _spaddress) public {
         fc = FarmerContract(_fcAddress);
         sp = StorePolicy(_spaddress);
-        sp.insertInList(policyID, address(this));
+        sp.insertInList(policyID, address(this), policyName);
     }
 
     // Code to check if farmer is eligible for the policy

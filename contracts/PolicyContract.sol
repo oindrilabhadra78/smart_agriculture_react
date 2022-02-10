@@ -44,4 +44,12 @@ contract PolicyContract {
             tx.origin.transfer(msg.value);
         }
     }  
+
+    function viewNumPolicy() public view returns(uint256) {
+        return p.numPolicies();
+    }
+
+    function viewPolicyDetails(uint256 index) public view returns(uint256, string) {
+        return p.viewPolicy(index);
+    }
 }

@@ -19,7 +19,6 @@ export const CropIds = (props) => {
   const [instance, setInstance] = useState();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
-  const [details, setDetails] = useState();
   const [address, setAddress] = useState("");
 
   const getCropIdList = async () => {

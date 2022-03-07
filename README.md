@@ -1,22 +1,16 @@
 ## Smart Agriculture Using Blockchain
 
-<br />
-
 ### Command for Migration of Smart Contracts:
 
 ```
 truffle migrate --reset
 ```
 
-<br />
-
 ### Command to Run the React App
 
 ```
 npm run start
 ```
-
-<br />
 
 ### Command to Find Hyperledger Caliper Benchmark Results:
 

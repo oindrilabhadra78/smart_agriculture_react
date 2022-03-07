@@ -1,0 +1,31 @@
+{
+    "caliper": {
+        "blockchain": "ethereum",
+        "command" : {
+            "start": "docker-compose -f ./networks/docker-compose.yml up -d && sleep 3s",
+            "end" : "docker-compose -f ./networks/docker-compose.yml down"
+          }
+    },
+    "ethereum": {
+        "url": "ws://localhost:8545",
+        "contractDeployerAddress": "0xE8d141ac8072aB4752Cf79C9a6ba3FC96b6c9c2A",
+        "contractDeployerAddressPrivateKey": "0x5c80b067f675efeeb812d258e437e9b2de87c19c4aa7865b5af58c986220a2e7",
+        "contractDeployerAddressPassword": "",
+        "fromAddress": "0xE8d141ac8072aB4752Cf79C9a6ba3FC96b6c9c2A",
+        "fromAddressPassword": "",
+        "transactionConfirmationBlocks": 2,
+        "contracts": {            
+            "Roles": {
+                "path": "./src/contracts/Roles.json",
+                "estimateGas": true
+            },
+            "ConsumerContract": {
+                "path": "./src/contracts/ConsumerContract.json",
+                "estimateGas": true,
+                "gas": {
+                    "addConsumer": 6721975
+                }
+            }
+        }
+    }
+}

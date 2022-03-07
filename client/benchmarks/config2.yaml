@@ -1,0 +1,20 @@
+test:
+    name: Read
+    description: test benchmark
+    workers:
+      type: local
+      number: 1
+    rounds:
+      - label: getNumConsumer
+        description: Read asset benchmark
+        txNumber: 2000
+        rateControl:
+          type: fixed-rate
+          opts:
+            tps: 360
+        workload:
+          module: benchmarks/readAsset2.js
+          arguments:
+            _name: "John"
+            _contact: "9822624302"
+            _pos: 0

@@ -1,0 +1,36 @@
+test:
+    name: Roles
+    description: test benchmark
+    workers:
+      type: local
+      number: 1
+    rounds:
+      - label: addFarmer
+        description: Read asset benchmark
+        txNumber: 1000
+        rateControl:
+          type: fixed-rate
+          opts:
+            tps: 300
+        workload:
+          module: benchmarks/readAsset.js
+          arguments:
+            _name: "John"
+            _stateOfResidence: "Punjab"
+            _gender: "M"
+            _landOwned: 5
+            _latitude: 20
+            _longitude: 5
+            _hash: "filehash"
+
+monitors:
+  resource:
+  - module: process
+    options:
+      interval: 1
+      processes: [{ command: 'node', arguments: 'benchmarks/readAsset.js', multiOutput: 'avg' }]
+      charting:
+        bar:
+          metrics: [CPU%(max), CPU%(avg)]
+        polar:
+          metrics: [CPU%(max), CPU%(avg)]

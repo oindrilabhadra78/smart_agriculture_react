@@ -1,0 +1,31 @@
+{
+    "caliper": {
+        "blockchain": "ethereum",
+        "command" : {
+            "start": "docker-compose -f ./networks/docker-compose.yml up -d && sleep 3s",
+            "end" : "docker-compose -f ./networks/docker-compose.yml down"
+          }
+    },
+    "ethereum": {
+        "url": "ws://localhost:8545",
+        "contractDeployerAddress": "0xFab0e1C99A3B3ba4B613ce50E0CB02852624c249",
+        "contractDeployerAddressPrivateKey": "0x1e982598056703b9d460b1fa59d043229d25fe34ce1205b0d7d05ce8ae4591d1",
+        "contractDeployerAddressPassword": "",
+        "fromAddress": "0xFab0e1C99A3B3ba4B613ce50E0CB02852624c249",
+        "fromAddressPassword": "",
+        "transactionConfirmationBlocks": 2,
+        "contracts": {            
+            "Roles": {
+                "path": "./src/contracts/Roles.json",
+                "estimateGas": true
+            },
+            "FarmerContract": {
+                "path": "./src/contracts/FarmerContract.json",
+                "estimateGas": true,
+                "gas": {
+                    "addFarmer": 6721975
+                }
+            }
+        }
+    }
+}

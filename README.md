@@ -48,6 +48,7 @@ Install <code>docker</code> and <code>docker-compose</code>
 - In the json files created after truffle migrate -
   - Add the field “gas”: 6721975 (or any other suitable value)
   - Change the “contractName” field to “name” ([Reference](https://hyperledger.github.io/caliper/v0.3.2/ethereum-config/#contract-definition-file))
+- If the contract under test is importing some other contracts, then all the contracts need to be deployed. Changes need to be made to the file ethereum-connector.js in the node_modules.
 
 [Reference](https://hyperledger.github.io/caliper/v0.4.2/fabric-tutorial/tutorials-fabric-existing/)
 
